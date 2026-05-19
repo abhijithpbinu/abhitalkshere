@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>abhitalkshere</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;600;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #080c10;
+      --bg2: #0d1318;
+      --bg3: #111820;
+      --surface: #141c24;
+      --border: rgba(0,210,180,0.13);
+      --accent: #00d2b4;
+      --accent2: #0af;
+      --accent3: #7c6aff;
+      --text: #d8e8ec;
+      --muted: #556672;
+      --glow: 0 0 28px rgba(0,210,180,0.22);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ── BACKGROUND GRID ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,210,180,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,210,180,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NOISE GRAIN ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.55;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── GLOW BLOBS ── */
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+      animation: blobDrift 14s ease-in-out infinite alternate;
+    }
+    .blob-1 { width: 480px; height: 480px; background: var(--accent); top: -120px; left: -100px; animation-delay: 0s; }
+    .blob-2 { width: 380px; height: 380px; background: var(--accent3); bottom: 60px; right: -80px; animation-delay: -6s; }
+    .blob-3 { width: 260px; height: 260px; background: var(--accent2); top: 45%; left: 50%; animation-delay: -3s; }
+
+    @keyframes blobDrift {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(30px,30px) scale(1.08); }
+    }
+
+    /* ── WRAPPER ── */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 60px 20px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* ── HEADER / AVATAR ── */
+    .header { text-align: center; margin-bottom: 36px; animation: fadeUp 0.7s ease both; }
+
+    .avatar-wrap {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px;
+      position: relative;
+    }
+    .avatar-ring {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: conic-gradient(var(--accent), var(--accent2), var(--accent3), var(--accent));
+      animation: spin 4s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .avatar-inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--bg2);
+      border: 3px solid var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.6rem;
+      overflow: hidden;
+    }
+    /* SVG circuit avatar */
+    .avatar-svg { width: 64px; height: 64px; }
+
+    /* uploaded photo fills the inner circle */
+    .avatar-inner img.avatar-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      position: absolute;
+      inset: 0;
+    }
+
+    /* ── UPLOAD BUTTON ── */
+    .upload-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 18px;
+      padding: 7px 16px;
+      border-radius: 20px;
+      border: 1px dashed rgba(0,210,180,0.35);
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .upload-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0,210,180,0.06);
+    }
+    .upload-btn svg { flex-shrink: 0; transition: transform 0.2s; }
+    .upload-btn:hover svg { transform: translateY(-1px); }
+    #photoInput { display: none; }
+
+    .handle {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.05rem;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+    .handle span { color: var(--muted); }
+
+    .bio {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      color: #8ea5b0;
+      line-height: 1.7;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    /* ── STATUS TICKER ── */
+    .ticker-wrap {
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      margin-bottom: 36px;
+      padding: 8px 0;
+      animation: fadeUp 0.7s 0.15s ease both;
+    }
+    .ticker {
+      display: flex;
+      gap: 60px;
+      white-space: nowrap;
+      animation: ticker 18s linear infinite;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+    }
+    .ticker span { display: inline-flex; align-items: center; gap: 8px; }
+    .ticker span::before { content: '◈'; font-size: 0.6rem; color: var(--accent3); }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      align-self: flex-start;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-label::before { content: ''; display: block; width: 20px; height: 1px; background: var(--muted); }
+    .section-label::after  { content: ''; display: block; flex: 1; height: 1px; background: var(--border); }
+
+    /* ── LINKS ── */
+    .links-block {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 48px;
+    }
+
+    .link-btn {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 22px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+      animation: fadeUp 0.7s ease both;
+    }
+    .link-btn:nth-child(1) { animation-delay: 0.25s; }
+    .link-btn:nth-child(2) { animation-delay: 0.35s; }
+
+    .link-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 0%, rgba(0,210,180,0.07) 50%, transparent 100%);
+      transform: translateX(-100%);
+      transition: transform 0.4s ease;
+    }
+    .link-btn:hover::before { transform: translateX(100%); }
+    .link-btn:hover {
+      border-color: var(--accent);
+      box-shadow: var(--glow);
+      transform: translateY(-2px);
+    }
+
+    .link-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.2rem;
+    }
+    .link-icon.tg  { background: rgba(0,172,238,0.13); border: 1px solid rgba(0,172,238,0.2); }
+    .link-icon.ig  { background: rgba(228,64,95,0.13); border: 1px solid rgba(228,64,95,0.2); }
+
+    .link-text { flex: 1; }
+    .link-name { display: block; font-size: 0.95rem; }
+    .link-sub  { display: block; font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em; margin-top: 2px; }
+
+    .link-arrow {
+      font-size: 0.85rem;
+      color: var(--muted);
+      transition: color 0.2s, transform 0.2s;
+    }
+    .link-btn:hover .link-arrow { color: var(--accent); transform: translateX(4px); }
+
+    /* ── GALLERY ── */
+    .gallery-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      aspect-ratio: 1;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      animation: fadeUp 0.7s ease both;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      box-shadow: var(--glow);
+      transform: translateY(-4px) scale(1.02);
+    }
+    .card:nth-child(1) { animation-delay: 0.3s; }
+    .card:nth-child(2) { animation-delay: 0.38s; }
+    .card:nth-child(3) { animation-delay: 0.46s; }
+    .card:nth-child(4) { animation-delay: 0.54s; }
+    .card:nth-child(5) { animation-delay: 0.62s; }
+    .card:nth-child(6) { animation-delay: 0.7s; }
+
+    .card-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.07;
+      background-size: cover;
+      transition: opacity 0.3s;
+    }
+    .card:hover .card-bg { opacity: 0.14; }
+
+    .card-icon {
+      font-size: 1.8rem;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 0 8px currentColor);
+    }
+    .card-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    /* card accent strips */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      border-radius: 12px 12px 0 0;
+      background: linear-gradient(90deg, transparent, var(--c, var(--accent)), transparent);
+      opacity: 0.6;
+    }
+    .card.c1 { --c: #00d2b4; }
+    .card.c2 { --c: #0af; }
+    .card.c3 { --c: #7c6aff; }
+    .card.c4 { --c: #ff6a9b; }
+    .card.c5 { --c: #ffaa44; }
+    .card.c6 { --c: #00d2b4; }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 48px;
+    }
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 12px;
+      text-align: center;
+      animation: fadeUp 0.7s 0.5s ease both;
+    }
+    .stat-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+      letter-spacing: -0.02em;
+    }
+    .stat-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* ── TERMINAL BIO BOX ── */
+    .terminal {
+      width: 100%;
+      background: #080e14;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.9;
+      color: #6fbf8a;
+      margin-bottom: 48px;
+      animation: fadeUp 0.7s 0.55s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+    .terminal::before {
+      content: '● ● ●';
+      display: block;
+      color: var(--muted);
+      font-size: 0.6rem;
+      letter-spacing: 4px;
+      margin-bottom: 12px;
+    }
+    .terminal .prompt { color: var(--accent2); }
+    .terminal .cmd    { color: var(--text); }
+    .terminal .output { color: #8fbfa0; }
+    .terminal .hi     { color: var(--accent); }
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 1em;
+      background: var(--accent);
+      animation: blink 1s step-end infinite;
+      vertical-align: text-bottom;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      animation: fadeUp 0.7s 0.65s ease both;
+    }
+    .footer a { color: var(--accent); text-decoration: none; }
+    .footer span { display: block; margin-top: 6px; opacity: 0.5; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 480px) {
+      .wrapper { padding: 44px 16px 60px; }
+      .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .stats-row { gap: 8px; }
+      .stat-num { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="wrapper">
+
+    <!-- ── HEADER ── -->
+    <header class="header">
+      <!-- Upload trigger -->
+      <input type="file" id="photoInput" accept="image/*">
+      <button class="upload-btn" onclick="document.getElementById('photoInput').click()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        UPLOAD PHOTO
+      </button>
+
+      <div class="avatar-wrap">
+        <div class="avatar-ring"></div>
+        <div class="avatar-inner" id="avatarInner">
+          <svg class="avatar-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="28" fill="#0d1318" stroke="#00d2b4" stroke-width="1.5"/>
+            <!-- circuit paths -->
+            <line x1="12" y1="32" x2="22" y2="32" stroke="#00d2b4" stroke-width="1.2"/>
+            <line x1="42" y1="32" x2="52" y2="32" stroke="#00d2b4" stroke-width="1.2"/>
+            <line x1="32" y1="12" x2="32" y2="22" stroke="#0af" stroke-width="1.2"/>
+            <line x1="32" y1="42" x2="32" y2="52" stroke="#0af" stroke-width="1.2"/>
+            <line x1="18" y1="18" x2="24" y2="24" stroke="#7c6aff" stroke-width="1"/>
+            <line x1="46" y1="18" x2="40" y2="24" stroke="#7c6aff" stroke-width="1"/>
+            <line x1="18" y1="46" x2="24" y2="40" stroke="#7c6aff" stroke-width="1"/>
+            <line x1="46" y1="46" x2="40" y2="40" stroke="#7c6aff" stroke-width="1"/>
+            <!-- center chip -->
+            <rect x="22" y="22" width="20" height="20" rx="3" fill="#111820" stroke="#00d2b4" stroke-width="1.5"/>
+            <rect x="26" y="26" width="12" height="12" rx="2" fill="#00d2b4" opacity="0.2"/>
+            <!-- dots on chip edges -->
+            <rect x="20" y="28" width="3" height="2" rx="0.5" fill="#00d2b4"/>
+            <rect x="20" y="34" width="3" height="2" rx="0.5" fill="#00d2b4"/>
+            <rect x="41" y="28" width="3" height="2" rx="0.5" fill="#00d2b4"/>
+            <rect x="41" y="34" width="3" height="2" rx="0.5" fill="#00d2b4"/>
+            <rect x="28" y="20" width="2" height="3" rx="0.5" fill="#0af"/>
+            <rect x="34" y="20" width="2" height="3" rx="0.5" fill="#0af"/>
+            <rect x="28" y="41" width="2" height="3" rx="0.5" fill="#0af"/>
+            <rect x="34" y="41" width="2" height="3" rx="0.5" fill="#0af"/>
+            <!-- inner glow circle -->
+            <circle cx="32" cy="32" r="4" fill="#00d2b4" opacity="0.7"/>
+          </svg>
+        </div>
+      </div>
+      <p class="handle"><span>@</span>abhitalkshere</p>
+      <p class="bio">Blending advanced AI capabilities with timeless digital aesthetics.<br>Transforming emerging tech into visual storytelling.</p>
+    </header>
+
+    <!-- ── TICKER ── -->
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <span>AI &amp; TECH</span>
+        <span>VISUAL STORYTELLING</span>
+        <span>DIGITAL AESTHETICS</span>
+        <span>EMERGING TECH</span>
+        <span>NEURAL NETWORKS</span>
+        <span>GENERATIVE AI</span>
+        <span>FUTURE FORWARD</span>
+        <!-- duplicate for seamless loop -->
+        <span>AI &amp; TECH</span>
+        <span>VISUAL STORYTELLING</span>
+        <span>DIGITAL AESTHETICS</span>
+        <span>EMERGING TECH</span>
+        <span>NEURAL NETWORKS</span>
+        <span>GENERATIVE AI</span>
+        <span>FUTURE FORWARD</span>
+      </div>
+    </div>
+
+    <!-- ── LINKS ── -->
+    <div class="section-label" style="width:100%">Connect</div>
+    <div class="links-block">
+
+      <a href="https://t.me/abhitalkshere" target="_blank" rel="noopener" class="link-btn">
+        <div class="link-icon tg">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M21.94 4.28L18.6 19.27c-.24 1.06-.87 1.33-1.76.83l-4.87-3.59-2.35 2.26c-.26.26-.48.48-.98.48l.35-4.95 9-8.13c.39-.35-.08-.54-.6-.19L5.14 14.63.37 13.16c-1.05-.33-1.07-1.04.22-1.55L20.66 2.97c.87-.31 1.63.21 1.28 1.31z" fill="#0af"/>
+          </svg>
+        </div>
+        <div class="link-text">
+          <span class="link-name">Telegram Channel</span>
+          <span class="link-sub">t.me/abhitalkshere</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="https://www.instagram.com/abhitalkshere?igsh=MWtydjlsYTdxMzY1Yw==" target="_blank" rel="noopener" class="link-btn">
+        <div class="link-icon ig">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="url(#ig)" stroke-width="2"/>
+            <circle cx="12" cy="12" r="4.5" stroke="url(#ig)" stroke-width="2"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="#ff6a9b"/>
+            <defs>
+              <linearGradient id="ig" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#f5a623"/>
+                <stop offset="50%" stop-color="#e4405f"/>
+                <stop offset="100%" stop-color="#833ab4"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="link-text">
+          <span class="link-name">Instagram</span>
+          <span class="link-sub">@abhitalkshere</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+    </div>
+
+    <!-- ── GALLERY ── -->
+    <div class="section-label" style="width:100%">Featured Content</div>
+    <div class="gallery-grid">
+
+      <div class="card c1">
+        <div class="card-icon" style="color:#00d2b4">🤖</div>
+        <span class="card-tag">AI Models</span>
+      </div>
+
+      <div class="card c2">
+        <div class="card-icon" style="color:#0af">🧠</div>
+        <span class="card-tag">Neural Nets</span>
+      </div>
+
+      <div class="card c3">
+        <div class="card-icon" style="color:#7c6aff">⚡</div>
+        <span class="card-tag">Tech Trends</span>
+      </div>
+
+      <div class="card c4">
+        <div class="card-icon" style="color:#ff6a9b">✦</div>
+        <span class="card-tag">Gen AI Art</span>
+      </div>
+
+      <div class="card c5">
+        <div class="card-icon" style="color:#ffaa44">📡</div>
+        <span class="card-tag">Deep Dives</span>
+      </div>
+
+      <div class="card c6">
+        <div class="card-icon" style="color:#00d2b4">◈</div>
+        <span class="card-tag">Futures</span>
+      </div>
+
+    </div>
+
+    <!-- ── STATS ── -->
+    <div class="stats-row">
+      <div class="stat">
+        <span class="stat-num">AI</span>
+        <span class="stat-label">Powered</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">24/7</span>
+        <span class="stat-label">Live Feed</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">Curiosity</span>
+      </div>
+    </div>
+
+    <!-- ── TERMINAL ── -->
+    <div class="section-label" style="width:100%">About</div>
+    <div class="terminal">
+      <div><span class="prompt">user@abhitalkshere</span><span class="cmd"> ~ $ whoami</span></div>
+      <div class="output">→ <span class="hi">abhitalkshere</span> // AI &amp; Tech Communicator</div>
+      <div><span class="prompt">user@abhitalkshere</span><span class="cmd"> ~ $ cat mission.txt</span></div>
+      <div class="output">→ Bridging the gap between <span class="hi">cutting-edge AI</span></div>
+      <div class="output">&nbsp;&nbsp; and everyday digital culture.</div>
+      <div><span class="prompt">user@abhitalkshere</span><span class="cmd"> ~ $ ls topics/</span></div>
+      <div class="output">→ <span class="hi">LLMs</span> &nbsp;<span class="hi">GenAI</span> &nbsp;<span class="hi">Vision</span> &nbsp;<span class="hi">Automation</span> &nbsp;<span class="hi">Future</span></div>
+      <div><span class="prompt">user@abhitalkshere</span><span class="cmd"> ~ $ _</span><span class="cursor"></span></div>
+    </div>
+
+    <!-- ── FOOTER ── -->
+    <footer class="footer">
+      <div>
+        <a href="https://t.me/abhitalkshere" target="_blank">Telegram</a>
+        &nbsp;·&nbsp;
+        <a href="https://www.instagram.com/abhitalkshere?igsh=MWtydjlsYTdxMzY1Yw==" target="_blank">Instagram</a>
+      </div>
+      <span>© 2025 abhitalkshere — crafted with ✦ &amp; circuits</span>
+    </footer>
+
+  </div>
+
+  <script>
+    const input = document.getElementById('photoInput');
+    const inner = document.getElementById('avatarInner');
+
+    input.addEventListener('change', function () {
+      const file = this.files[0];
+      if (!file || !file.type.startsWith('image/')) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        inner.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.className = 'avatar-photo';
+        img.alt = 'Profile photo';
+        inner.appendChild(img);
+
+        const btn = document.querySelector('.upload-btn');
+        btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> CHANGE PHOTO';
+      };
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
