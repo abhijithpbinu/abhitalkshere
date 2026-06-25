@@ -1182,7 +1182,7 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <!-- PAYMENT MODAL (name + email capture before pay) -->
-<div id="payModal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
+<div id="payModal" style="position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
   <div style="background:#111;border:1px solid rgba(212,160,23,0.35);border-radius:20px;padding:40px 36px;max-width:440px;width:90%;position:relative;">
     <button onclick="closePayModal()" style="position:absolute;top:16px;right:20px;background:none;border:none;color:#999;font-size:1.3rem;cursor:pointer;">✕</button>
     <p style="font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#D4A017;margin-bottom:8px;">Secure Checkout</p>
@@ -1210,7 +1210,7 @@
 </div>
 
 <!-- SUCCESS OVERLAY (course link revealed here) -->
-<div id="successOverlay" style="display:none;position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,0.95);backdrop-filter:blur(12px);align-items:center;justify-content:center;text-align:center;padding:24px;">
+<div id="successOverlay" style="position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,0.95);backdrop-filter:blur(12px);align-items:center;justify-content:center;text-align:center;padding:24px;">
   <div style="max-width:500px;width:100%;">
     <div style="font-size:4rem;margin-bottom:20px;animation:popIn .5s ease">🎉</div>
     <p style="font-size:0.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#D4A017;margin-bottom:12px;">Payment Successful</p>
@@ -1232,76 +1232,82 @@
 
 <style>
   @keyframes popIn { 0%{transform:scale(0.5);opacity:0} 70%{transform:scale(1.15)} 100%{transform:scale(1);opacity:1} }
-  #payModal { display:none; }
-  #payModal.open { display:flex; }
-  #successOverlay { display:none; }
-  #successOverlay.open { display:flex; }
+  #payModal { display:none !important; }
+  #payModal.open { display:flex !important; }
+  #successOverlay { display:none !important; }
+  #successOverlay.open { display:flex !important; }
 </style>
 
 <script>
-  // ══════════════════════════════════════════════════
-  //  RAZORPAY CONFIG — paste your Key ID below
-  // ══════════════════════════════════════════════════
+  // ══════════════════════════════════════════
+  //  CONFIG — update these two values
+  // ══════════════════════════════════════════
   const RAZORPAY_KEY = 'rzp_live_T5qVcDUotLRosk';
+  const COURSE_URL   = 'https://t.me/abhitalkshere'; // ← your real course link
 
-  // The secret course URL shown ONLY after payment
-  const COURSE_URL = 'https://t.me/abhitalkshere'; // ← replace with your real course link
-
+  // ── Modal helpers ──
   function startPayment() {
-    document.getElementById('payModal').classList.add('open');
+    var m = document.getElementById('payModal');
+    m.style.display = 'flex';
   }
   function closePayModal() {
-    document.getElementById('payModal').classList.remove('open');
+    document.getElementById('payModal').style.display = 'none';
   }
   function closeSuccess() {
-    document.getElementById('successOverlay').classList.remove('open');
+    document.getElementById('successOverlay').style.display = 'none';
+  }
+  function showSuccess(paymentId) {
+    document.getElementById('courseLink').href = COURSE_URL;
+    document.getElementById('successName').textContent = '✅ Payment ID: ' + paymentId;
+    document.getElementById('successOverlay').style.display = 'flex';
   }
 
+  // ── Main payment function ──
   function proceedToRazorpay() {
-    const name  = document.getElementById('payName').value.trim();
-    const email = document.getElementById('payEmail').value.trim();
-    const phone = document.getElementById('payPhone').value.trim();
+    var name  = document.getElementById('payName').value.trim();
+    var email = document.getElementById('payEmail').value.trim();
+    var phone = document.getElementById('payPhone').value.trim();
 
-    if (!name)  { alert('Please enter your name.'); return; }
-    if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
-    if (!phone || phone.length < 10)   { alert('Please enter a valid 10-digit phone.'); return; }
+    if (!name)                        { alert('Please enter your name.');          return; }
+    if (!email || !email.includes('@')){ alert('Please enter a valid email.');      return; }
+    if (!phone || phone.length < 10)  { alert('Please enter a valid phone number.');return; }
 
-    // Check Razorpay SDK loaded
     if (typeof Razorpay === 'undefined') {
-      alert('Razorpay failed to load. Please check your internet connection and try again.');
+      alert('Razorpay is not loaded yet. Please check your internet connection and refresh the page.');
       return;
     }
 
-    const options = {
-      key: RAZORPAY_KEY,
-      amount: 99900,
-      currency: 'INR',
-      name: 'Abhi Talks Here',
+    var options = {
+      key:         RAZORPAY_KEY,
+      amount:      99900,
+      currency:    'INR',
+      name:        'Abhi Talks Here',
       description: 'AI Course — Lifetime Access',
-      prefill: { name: name, email: email, contact: phone },
-      theme: { color: '#D4A017' },
-      modal: {
-        backdropclose: false,
-        ondismiss: function() { console.log('Razorpay closed by user'); }
-      },
+      prefill:     { name: name, email: email, contact: phone },
+      theme:       { color: '#D4A017' },
+      modal:       { backdropclose: false },
       handler: function(response) {
         closePayModal();
-        document.getElementById('courseLink').href = COURSE_URL;
-        document.getElementById('successName').textContent = '✅ Payment ID: ' + response.razorpay_payment_id;
-        document.getElementById('successOverlay').classList.add('open');
+        showSuccess(response.razorpay_payment_id);
       }
     };
 
     try {
-      const rzp = new Razorpay(options);
-      rzp.on('payment.failed', function(response) {
-        alert('Payment failed: ' + response.error.description + '\nReason: ' + response.error.reason);
+      var rzp = new Razorpay(options);
+      rzp.on('payment.failed', function(resp) {
+        alert('❌ Payment failed!\n\nReason: ' + resp.error.description + '\n\nPlease try again or use a different payment method.');
       });
       rzp.open();
     } catch(err) {
-      alert('Could not open Razorpay.\n\nError: ' + err.message + '\n\nMost likely your Razorpay account KYC is not yet activated. Go to razorpay.com → Dashboard → Complete Activation.');
+      alert('❌ Razorpay could not open.\n\nError: ' + err.message + '\n\nPossible reasons:\n1. Your Razorpay KYC/activation is pending\n2. Invalid API key\n\nGo to razorpay.com → Dashboard → Complete Activation.');
     }
   }
+
+  // Hide modals on page load (safe fallback)
+  window.addEventListener('load', function() {
+    document.getElementById('payModal').style.display = 'none';
+    document.getElementById('successOverlay').style.display = 'none';
+  });
 
   // Mobile menu
   function openMenu() { document.getElementById('mobileMenu').classList.add('open'); }
