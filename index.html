@@ -3,974 +3,1031 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Abhi Talks Here | Digital Creator & AI Course Creator</title>
-<meta name="description" content="Digital creator, content producer, and AI educator. Join thousands learning with Abhi.">
+<title>Abhi Talks Here — Digital Creator & AI Educator</title>
+<meta name="description" content="Digital creator, content strategist, and AI educator. Join thousands learning to thrive in the digital age.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --gold: #D4AF37;
-    --gold-light: #F5D76E;
-    --gold-dark: #A8892A;
-    --red: #C0392B;
-    --red-bright: #E74C3C;
-    --sky: #5DADE2;
-    --sky-bright: #85C1E9;
-    --black: #0A0A0A;
-    --dark: #111111;
-    --dark2: #1A1A1A;
-    --dark3: #222222;
-    --white: #F8F4ED;
-    --text-muted: #888888;
-  }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html { scroll-behavior: smooth; overflow-x: hidden; }
+  :root {
+    --gold: #D4A017;
+    --gold-light: #F0C040;
+    --gold-dim: #8B6914;
+    --red: #C0392B;
+    --red-bright: #E74C3C;
+    --sky: #38BDF8;
+    --sky-dim: #0EA5E9;
+    --black: #080808;
+    --surface: #0F0F0F;
+    --surface-2: #181818;
+    --surface-3: #222222;
+    --text: #F5F0E8;
+    --text-muted: #999;
+    --border: rgba(212,160,23,0.18);
+  }
+
+  html { scroll-behavior: smooth; }
 
   body {
     background: var(--black);
-    color: var(--white);
-    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
     overflow-x: hidden;
-    cursor: none;
   }
 
-  /* Custom Cursor */
-  .cursor {
-    width: 12px; height: 12px;
-    background: var(--gold);
-    border-radius: 50%;
-    position: fixed; top: 0; left: 0;
-    pointer-events: none; z-index: 9999;
-    transition: transform 0.15s ease;
-    mix-blend-mode: difference;
-  }
-  .cursor-ring {
-    width: 36px; height: 36px;
-    border: 1px solid var(--gold);
-    border-radius: 50%;
-    position: fixed; top: 0; left: 0;
-    pointer-events: none; z-index: 9998;
-    transition: all 0.25s ease;
-    opacity: 0.6;
-  }
-
-  /* Noise Overlay */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 1;
-    opacity: 0.4;
-  }
-
-  /* NAV */
+  /* ─── NAV ─── */
   nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 1000;
-    padding: 1.2rem 2rem;
-    display: flex; align-items: center; justify-content: space-between;
-    background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(212,175,55,0.08);
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background: rgba(8,8,8,0.82);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
   }
   .nav-logo {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.6rem;
-    letter-spacing: 3px;
-    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-decoration: none;
   }
-  .nav-links {
-    display: flex; gap: 2rem; list-style: none;
-  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
   .nav-links a {
-    color: var(--white); opacity: 0.7;
+    color: var(--text-muted);
     text-decoration: none;
-    font-size: 0.82rem; letter-spacing: 2px;
-    text-transform: uppercase; font-weight: 500;
-    transition: opacity 0.3s, color 0.3s;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color .25s;
   }
-  .nav-links a:hover { opacity: 1; color: var(--gold); }
-
+  .nav-links a:hover { color: var(--gold); }
   .nav-cta {
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    background: linear-gradient(135deg, var(--gold), var(--gold-dim));
     color: var(--black) !important;
-    padding: 0.5rem 1.4rem !important;
-    border-radius: 2px;
-    opacity: 1 !important;
-    font-weight: 600 !important;
-    transition: all 0.3s !important;
+    padding: 9px 22px;
+    border-radius: 4px;
+    font-weight: 700 !important;
+    -webkit-text-fill-color: var(--black) !important;
+    transition: opacity .2s !important;
   }
-  .nav-cta:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(212,175,55,0.4); }
+  .nav-cta:hover { opacity: .85; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 2px; background: var(--gold); border-radius: 2px; }
 
-  .hamburger {
-    display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px;
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px 24px 80px;
   }
-  .hamburger span {
-    display: block; width: 24px; height: 2px;
-    background: var(--gold); transition: 0.3s;
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 80% 50%, rgba(212,160,23,0.12) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 20% 70%, rgba(192,57,43,0.09) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 50% 20%, rgba(56,189,248,0.06) 0%, transparent 55%),
+      #080808;
   }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(212,160,23,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212,160,23,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+  }
+  .hero-text { }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(212,160,23,0.1);
+    border: 1px solid rgba(212,160,23,0.3);
+    color: var(--gold-light);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 40px;
+    margin-bottom: 28px;
+  }
+  .hero-badge-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+
+  .hero-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 1;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, #a07010 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-style: italic;
+    color: var(--sky);
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+  }
+  .hero-bio {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    max-width: 480px;
+    margin-bottom: 40px;
+  }
+  .hero-bio strong { color: var(--text); font-weight: 600; }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--gold), #B8860B);
+    color: #000;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 24px rgba(212,160,23,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(212,160,23,0.5); }
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 14px 28px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: border-color .2s, background .2s;
+  }
+  .btn-secondary:hover { border-color: var(--gold); background: rgba(212,160,23,0.08); }
+
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+  .stat-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 4px; }
+
+  /* Profile visual */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .profile-ring {
+    position: relative;
+    width: 320px;
+    height: 320px;
+  }
+  .ring-outer {
+    position: absolute; inset: -12px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--gold), var(--red), var(--sky), var(--gold));
+    animation: spin 8s linear infinite;
+    padding: 3px;
+  }
+  .ring-outer::after {
+    content: '';
+    position: absolute; inset: 3px;
+    border-radius: 50%;
+    background: var(--black);
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .ring-inner {
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--surface-2);
+    border: 3px solid rgba(212,160,23,0.3);
+  }
+  .ring-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .profile-badge-ig {
+    position: absolute;
+    bottom: 12px; right: -12px;
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 8px 14px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    z-index: 2;
+  }
+  .floating-chip {
+    position: absolute;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    z-index: 2;
+  }
+  .chip-1 { top: 20px; left: -30px; animation: float1 4s ease-in-out infinite; }
+  .chip-2 { bottom: 60px; left: -40px; animation: float2 5s ease-in-out infinite; }
+  @keyframes float1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  @keyframes float2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+  .chip-icon { font-size: 1.1rem; }
+
+  /* ─── SECTION BASE ─── */
+  section { padding: 100px 24px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    line-height: 1.05;
+    letter-spacing: 2px;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .section-sub {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 540px;
+    line-height: 1.75;
+  }
+  .section-header { margin-bottom: 60px; }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--surface); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-content .section-sub { max-width: 100%; margin-bottom: 32px; }
+  .about-features { display: flex; flex-direction: column; gap: 20px; }
+  .about-feat {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .feat-icon {
+    flex-shrink: 0;
+    width: 40px; height: 40px;
+    background: rgba(212,160,23,0.1);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+  }
+  .feat-text strong { display: block; color: var(--text); font-weight: 600; margin-bottom: 4px; }
+  .feat-text span { font-size: 0.875rem; color: var(--text-muted); }
+  .about-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .about-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 20px;
+    text-align: center;
+    transition: border-color .25s, transform .25s;
+  }
+  .about-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+  .about-card:first-child { grid-column: span 2; }
+  .about-card .card-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+  .about-card .card-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 6px; }
+
+  /* ─── COURSE ─── */
+  #course { background: var(--black); }
+  .course-wrapper {
+    background: linear-gradient(135deg, var(--surface-2) 0%, #1a1200 100%);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .course-header-band {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .course-header-band span {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--black);
+  }
+  .course-body { padding: 48px; }
+  .course-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .course-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    letter-spacing: 2px;
+    line-height: 1.05;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+  .course-title span { color: var(--gold); }
+  .course-desc { color: var(--text-muted); line-height: 1.8; margin-bottom: 32px; }
+  .curriculum { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+  .curriculum-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(212,160,23,0.06);
+    border: 1px solid rgba(212,160,23,0.12);
+    border-radius: 8px;
+  }
+  .curr-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    color: var(--gold-dim);
+    letter-spacing: 1px;
+    flex-shrink: 0;
+    width: 28px;
+  }
+  .curr-text { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+  .curr-check { margin-left: auto; color: var(--gold); font-size: 0.9rem; }
+  .course-pricing {
+    background: var(--surface-3);
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .price-tag {
+    position: absolute;
+    top: 16px; right: -28px;
+    background: var(--red);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 40px;
+    transform: rotate(45deg);
+  }
+  .price-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+  .price-period { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 24px; }
+  .price-features { list-style: none; text-align: left; display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+  .price-features li { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; color: var(--text-muted); }
+  .price-features li::before { content: '✦'; color: var(--gold); font-size: 0.7rem; flex-shrink: 0; }
+  .btn-enroll {
+    width: 100%;
+    background: linear-gradient(135deg, var(--gold), #B8860B);
+    color: var(--black);
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    display: block;
+    text-decoration: none;
+    box-shadow: 0 4px 24px rgba(212,160,23,0.4);
+  }
+  .btn-enroll:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(212,160,23,0.55); }
+  .guarantee { font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; text-align: center; }
+
+  /* ─── CONTENT ─── */
+  #content { background: var(--surface); }
+  .content-tabs { display: flex; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
+  .tab-btn {
+    padding: 8px 20px;
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(212,160,23,0.08);
+  }
+  .content-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .content-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform .25s, border-color .25s;
+    cursor: pointer;
+  }
+  .content-card:hover { transform: translateY(-6px); border-color: var(--gold); }
+  .content-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, var(--surface-3), #1c1400);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .content-thumb::after {
+    content: '▶';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    opacity: 0;
+    transition: opacity .2s;
+  }
+  .content-card:hover .content-thumb::after { opacity: 1; }
+  .content-info { padding: 18px; }
+  .content-tag {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--sky);
+    margin-bottom: 8px;
+  }
+  .content-title { font-size: 0.92rem; font-weight: 600; color: var(--text); line-height: 1.4; }
+  .content-meta { font-size: 0.78rem; color: var(--text-muted); margin-top: 8px; }
+
+  /* ─── SOCIAL ─── */
+  #social { background: var(--black); }
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .social-card {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    text-decoration: none;
+    transition: all .25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .social-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity .25s;
+  }
+  .social-card.ig::before { background: linear-gradient(135deg, rgba(131,58,180,0.15), rgba(253,29,29,0.12)); }
+  .social-card.tg::before { background: linear-gradient(135deg, rgba(0,136,204,0.15), rgba(56,189,248,0.1)); }
+  .social-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+  .social-card:hover::before { opacity: 1; }
+  .social-icon {
+    position: relative;
+    z-index: 1;
+    width: 64px; height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+  .ig .social-icon { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); }
+  .tg .social-icon { background: linear-gradient(135deg, #0088cc, #38bdf8); }
+  .social-info { position: relative; z-index: 1; }
+  .social-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 2px; color: var(--text); }
+  .social-handle { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 8px; }
+  .social-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .social-arrow { transition: transform .2s; }
+  .social-card:hover .social-arrow { transform: translateX(4px); }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--surface); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-info { display: flex; flex-direction: column; gap: 24px; margin-top: 40px; }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .contact-icon {
+    width: 44px; height: 44px;
+    background: rgba(212,160,23,0.1);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .contact-item a { color: var(--text); text-decoration: none; font-size: 0.95rem; font-weight: 500; }
+  .contact-item a:hover { color: var(--gold); }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group label { font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); }
+  .form-group input, .form-group textarea {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color .2s;
+    resize: vertical;
+  }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); }
+  .form-group textarea { min-height: 120px; }
+  .btn-send {
+    background: linear-gradient(135deg, var(--gold), #B8860B);
+    color: var(--black);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(212,160,23,0.35);
+  }
+  .btn-send:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,160,23,0.5); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 48px 24px;
+    text-align: center;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+  }
+  .footer-tagline { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 32px; }
+  .footer-links { display: flex; justify-content: center; gap: 24px; list-style: none; margin-bottom: 32px; flex-wrap: wrap; }
+  .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.82rem; transition: color .2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-divider { border: none; border-top: 1px solid var(--border); margin: 0 auto 24px; max-width: 400px; }
+  .footer-copy { font-size: 0.78rem; color: var(--text-muted); }
+  .footer-copy span { color: var(--gold); }
+
+  /* Divider line */
+  .gold-line {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin-bottom: 32px;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero-inner { grid-template-columns: 1fr; text-align: center; }
+    .hero-text { order: 2; }
+    .hero-visual { order: 1; }
+    .hero-actions { justify-content: center; }
+    .hero-stats { justify-content: center; }
+    .hero-bio { margin: 0 auto 40px; }
+    .profile-ring { width: 240px; height: 240px; }
+    .chip-1, .chip-2 { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .course-grid { grid-template-columns: 1fr; gap: 40px; }
+    .course-body { padding: 28px 24px; }
+    .content-grid { grid-template-columns: 1fr 1fr; }
+    .social-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+    section { padding: 72px 24px; }
+  }
+
+  @media (max-width: 600px) {
+    .content-grid { grid-template-columns: 1fr; }
+    .about-visual { grid-template-columns: 1fr 1fr; }
+    .about-card:first-child { grid-column: span 2; }
+    .hero-stats { gap: 20px; flex-wrap: wrap; }
+  }
+
+  /* Mobile menu */
   .mobile-menu {
-    display: none; position: fixed; inset: 0; z-index: 999;
-    background: rgba(10,10,10,0.97); backdrop-filter: blur(20px);
-    flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(8,8,8,0.97);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
   }
-  .mobile-menu.active { display: flex; }
+  .mobile-menu.open { display: flex; }
   .mobile-menu a {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.5rem; letter-spacing: 4px;
-    color: var(--white); text-decoration: none; transition: color 0.3s;
+    font-size: 2.2rem;
+    letter-spacing: 3px;
+    color: var(--text);
+    text-decoration: none;
+    transition: color .2s;
   }
   .mobile-menu a:hover { color: var(--gold); }
   .mobile-close {
-    position: absolute; top: 1.5rem; right: 2rem;
-    font-size: 2rem; color: var(--gold); cursor: pointer; background: none; border: none;
-  }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-    padding: 8rem 2rem 4rem;
-  }
-
-    .hero-bg {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(212,175,55,0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 80% at 20% 80%, rgba(192,57,43,0.07) 0%, transparent 50%),
-      radial-gradient(ellipse 50% 50% at 90% 10%, rgba(93,173,226,0.05) 0%, transparent 50%),
-      var(--black);
-  }
-
-  .hero-grid {
-    position: absolute; inset: 0; opacity: 0.04;
-    background-image:
-      linear-gradient(var(--gold) 1px, transparent 1px),
-      linear-gradient(90deg, var(--gold) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-
-  /* Floating orbs */
-  .orb {
-    position: absolute; border-radius: 50%;
-    filter: blur(80px); pointer-events: none;
-    animation: floatOrb 8s ease-in-out infinite;
-  }
-  .orb-1 {
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(212,175,55,0.12), transparent 70%);
-    top: 10%; right: 10%;
-    animation-delay: 0s;
-  }
-  .orb-2 {
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(192,57,43,0.1), transparent 70%);
-    bottom: 20%; left: 5%;
-    animation-delay: -3s;
-  }
-  .orb-3 {
-    width: 250px; height: 250px;
-    background: radial-gradient(circle, rgba(93,173,226,0.08), transparent 70%);
-    top: 60%; right: 30%;
-    animation-delay: -5s;
-  }
-  @keyframes floatOrb {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-30px) scale(1.05); }
-  }
-
-  .hero-content {
-    position: relative; z-index: 2;
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 4rem; align-items: center;
-    max-width: 1200px; width: 100%;
-  }
-
-  .hero-text { }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    background: rgba(212,175,55,0.1);
-    border: 1px solid rgba(212,175,55,0.3);
-    border-radius: 2px;
-    padding: 0.4rem 1rem;
-    font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--gold); font-weight: 500;
-    margin-bottom: 1.5rem;
-    animation: fadeUp 0.8s ease forwards;
-    opacity: 0;
-  }
-  .badge-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--gold);
-    animation: pulse 2s ease infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
-
-  .hero-name {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 7vw, 6rem);
-    font-weight: 900; line-height: 1;
-    margin-bottom: 0.3rem;
-    animation: fadeUp 0.8s 0.15s ease forwards; opacity: 0;
-  }
-  .hero-name span {
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 40%, var(--gold) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .hero-handle {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(1.2rem, 3vw, 2rem);
-    letter-spacing: 5px; color: var(--sky);
-    margin-bottom: 1.5rem;
-    animation: fadeUp 0.8s 0.25s ease forwards; opacity: 0;
-  }
-  .hero-bio {
-    font-size: 1rem; line-height: 1.8;
-    color: rgba(248,244,237,0.65);
-    max-width: 480px;
-    margin-bottom: 2rem;
-    animation: fadeUp 0.8s 0.35s ease forwards; opacity: 0;
-  }
-  .hero-stats {
-    display: flex; gap: 2rem; margin-bottom: 2.5rem;
-    animation: fadeUp 0.8s 0.45s ease forwards; opacity: 0;
-  }
-  .stat { }
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.2rem; color: var(--gold); line-height: 1;
-  }
-  .stat-label {
-    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--text-muted); margin-top: 2px;
-  }
-  .stat-divider {
-    width: 1px; background: rgba(212,175,55,0.2); align-self: stretch;
-  }
-
-  .hero-ctas {
-    display: flex; gap: 1rem; flex-wrap: wrap;
-    animation: fadeUp 0.8s 0.55s ease forwards; opacity: 0;
-  }
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: 0.6rem;
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    color: var(--black); font-weight: 700;
-    padding: 0.9rem 2rem; border-radius: 2px;
-    text-decoration: none; font-size: 0.9rem;
-    letter-spacing: 1px; text-transform: uppercase;
-    transition: all 0.3s; border: none; cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 40px rgba(212,175,55,0.4);
-  }
-  .btn-secondary {
-    display: inline-flex; align-items: center; gap: 0.6rem;
-    background: transparent;
-    border: 1px solid rgba(212,175,55,0.4);
-    color: var(--gold); font-weight: 600;
-    padding: 0.9rem 2rem; border-radius: 2px;
-    text-decoration: none; font-size: 0.9rem;
-    letter-spacing: 1px; text-transform: uppercase;
-    transition: all 0.3s; cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .btn-secondary:hover {
-    background: rgba(212,175,55,0.1);
-    transform: translateY(-2px);
-  }
-
-  /* Profile Image */
-  .hero-visual {
-    position: relative; display: flex;
-    justify-content: center; align-items: center;
-    animation: fadeUp 0.8s 0.3s ease forwards; opacity: 0;
-  }
-  .profile-frame {
-    position: relative; width: 360px; height: 440px;
-  }
-  .profile-border {
-    position: absolute; inset: -3px;
-    border-radius: 4px;
-    background: linear-gradient(135deg, var(--gold), var(--red), var(--sky), var(--gold));
-    background-size: 300% 300%;
-    animation: gradientShift 4s ease infinite;
-    z-index: 0;
-  }
-  @keyframes gradientShift {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-  }
-  .profile-img-wrap {
-    position: relative; z-index: 1;
-    width: 100%; height: 100%;
-    border-radius: 3px; overflow: hidden;
-    background: transparent;
-  }
-  .profile-img-wrap img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.5s ease;
-    display: block;
-  }
-  .profile-img-wrap:hover img { transform: scale(1.04); }
-
-  /* Floating badge on image */
-  .floating-tag {
     position: absolute;
-    background: var(--dark2);
-    border: 1px solid rgba(212,175,55,0.3);
-    border-radius: 3px;
-    padding: 0.6rem 1rem;
-    z-index: 5;
-    backdrop-filter: blur(10px);
-  }
-  .floating-tag.tag-1 {
-    bottom: -1rem; left: -2rem;
-    animation: floatTag 4s ease-in-out infinite;
-  }
-  .floating-tag.tag-2 {
-    top: 1rem; right: -2rem;
-    animation: floatTag 4s ease-in-out infinite;
-    animation-delay: -2s;
-  }
-  @keyframes floatTag {
-    0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)}
-  }
-  .tag-label {
-    font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--text-muted); display: block; margin-bottom: 2px;
-  }
-  .tag-value {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.3rem; color: var(--gold); letter-spacing: 2px;
+    top: 24px; right: 28px;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--gold);
   }
 
-  /* Decorative lines */
-  .deco-line {
-    position: absolute; background: linear-gradient(to right, transparent, var(--gold), transparent);
-    height: 1px; width: 200px; opacity: 0.3;
-  }
-  .deco-line-v {
-    position: absolute; background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-    width: 1px; height: 150px; opacity: 0.2;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* SECTION STYLES */
-  section { padding: 6rem 2rem; position: relative; }
-  .container { max-width: 1200px; margin: 0 auto; }
-
-  .section-label {
-    font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--gold); font-weight: 600;
-    margin-bottom: 0.8rem; display: block;
-  }
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.2rem, 5vw, 3.5rem);
-    font-weight: 900; line-height: 1.1;
-    margin-bottom: 1.5rem;
-  }
-  .section-title span { color: var(--gold); }
-  .section-line {
-    width: 60px; height: 3px;
-    background: linear-gradient(to right, var(--gold), var(--red));
-    border-radius: 2px; margin-bottom: 2rem;
-  }
-
-  /* ABOUT SECTION */
-  .about { background: var(--dark); }
-  .about-inner {
-    display: grid; grid-template-columns: 1fr 1.3fr;
-    gap: 5rem; align-items: center;
-  }
-  .about-visual { position: relative; }
-  .about-img-stack {
-    position: relative; height: 460px;
-  }
-  .about-img-main {
-    position: absolute; right: 0; top: 0;
-    width: 280px; height: 360px;
-    border-radius: 3px; overflow: hidden;
-    border: 2px solid rgba(212,175,55,0.2);
-  }
-  .about-img-main img { width: 100%; height: 100%; object-fit: cover; }
-  .about-accent-box {
-    position: absolute; left: 0; bottom: 0;
-    width: 200px; height: 200px;
-    background: linear-gradient(135deg, var(--red) 0%, var(--gold-dark) 100%);
-    border-radius: 3px; z-index: 0;
-    opacity: 0.7;
-  }
-  .about-quote-box {
-    position: absolute; left: 10px; top: 50%;
-    transform: translateY(-50%);
-    background: var(--dark2); border: 1px solid rgba(212,175,55,0.25);
-    border-radius: 3px; padding: 1.5rem; width: 200px;
-    z-index: 3;
-    backdrop-filter: blur(10px);
-  }
-  .about-quote-box p {
-    font-style: italic; font-size: 0.88rem;
-    color: var(--white); line-height: 1.6;
-    margin-bottom: 0.8rem;
-  }
-  .about-quote-box span {
-    font-size: 0.72rem; color: var(--gold); letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-  .about-text h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem; margin-bottom: 1rem; color: var(--gold-light);
-  }
-  .about-text p {
-    color: rgba(248,244,237,0.65); line-height: 1.8;
-    margin-bottom: 1.2rem; font-size: 0.95rem;
-  }
-  .about-features {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem;
-  }
-  .about-feature {
-    display: flex; align-items: flex-start; gap: 0.8rem;
-    padding: 1rem; background: rgba(212,175,55,0.04);
-    border: 1px solid rgba(212,175,55,0.1); border-radius: 3px;
-  }
-  .feature-icon {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1rem; flex-shrink: 0;
-    color: var(--black);
-  }
-  .feature-text strong {
-    display: block; font-size: 0.85rem; margin-bottom: 2px; color: var(--white);
-  }
-  .feature-text span { font-size: 0.78rem; color: var(--text-muted); }
-
-  /* COURSES SECTION */
-  .courses { background: var(--black); }
-  .courses-header {
-    text-align: center; max-width: 600px; margin: 0 auto 4rem;
-  }
-  .courses-header .section-line { margin: 0 auto 2rem; }
-  .courses-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-  .course-card {
-    background: var(--dark);
-    border: 1px solid rgba(212,175,55,0.1);
-    border-radius: 4px; overflow: hidden;
-    transition: all 0.4s ease; position: relative;
-  }
-  .course-card:hover {
-    border-color: rgba(212,175,55,0.4);
-    transform: translateY(-6px);
-    box-shadow: 0 20px 60px rgba(212,175,55,0.1);
-  }
-  .course-card.featured {
-    border-color: rgba(212,175,55,0.4);
-    background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, var(--dark) 60%);
-  }
-  .course-card.featured::before {
-    content: 'MOST POPULAR';
-    position: absolute; top: 1rem; right: -2rem;
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    color: var(--black); font-size: 0.62rem;
-    font-weight: 700; letter-spacing: 2px;
-    padding: 0.3rem 2.5rem; transform: rotate(45deg);
-    transform-origin: center;
-    right: -0.8rem; top: 1.5rem;
-  }
-  .course-thumb {
-    height: 180px; position: relative; overflow: hidden;
-    background: var(--dark2);
-  }
-  .course-thumb-bg {
-    width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 4rem;
-    position: relative;
-  }
-  .course-thumb-bg::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: inherit;
-    opacity: 0.15;
-  }
-  .ct-1 { background: linear-gradient(135deg, #1a0a00, #3d1a00); }
-  .ct-2 { background: linear-gradient(135deg, #0a0010, #200030); }
-  .ct-3 { background: linear-gradient(135deg, #001020, #002040); }
-  .course-badge {
-    position: absolute; top: 1rem; left: 1rem;
-    background: rgba(212,175,55,0.9); color: var(--black);
-    font-size: 0.65rem; font-weight: 700; letter-spacing: 2px;
-    padding: 0.25rem 0.7rem; border-radius: 2px;
-    text-transform: uppercase;
-  }
-  .course-body { padding: 1.5rem; }
-  .course-level {
-    font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--sky); margin-bottom: 0.5rem; display: block;
-  }
-  .course-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem; font-weight: 700;
-    margin-bottom: 0.6rem; line-height: 1.3;
-  }
-  .course-desc {
-    font-size: 0.82rem; color: rgba(248,244,237,0.6);
-    line-height: 1.6; margin-bottom: 1.2rem;
-  }
-  .course-meta {
-    display: flex; gap: 1rem; margin-bottom: 1.2rem;
-    flex-wrap: wrap;
-  }
-  .course-meta span {
-    font-size: 0.75rem; color: var(--text-muted);
-    display: flex; align-items: center; gap: 0.3rem;
-  }
-  .course-footer {
-    display: flex; align-items: center; justify-content: space-between;
-    padding-top: 1.2rem;
-    border-top: 1px solid rgba(212,175,55,0.1);
-  }
-  .course-price {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem; color: var(--gold);
-  }
-  .course-price small {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.75rem; color: var(--text-muted);
-    display: block; letter-spacing: 1px;
-    text-decoration: line-through;
-  }
-  .btn-enroll {
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    color: var(--black); font-weight: 700;
-    padding: 0.6rem 1.4rem; border-radius: 2px;
-    text-decoration: none; font-size: 0.82rem;
-    letter-spacing: 1px; text-transform: uppercase;
-    transition: all 0.3s; display: inline-block; cursor: pointer;
-    border: none; font-family: 'DM Sans', sans-serif;
-  }
-  .btn-enroll:hover { transform: scale(1.05); box-shadow: 0 5px 20px rgba(212,175,55,0.4); }
-
-  /* TESTIMONIALS */
-  .testimonials { background: var(--dark); overflow: hidden; }
-  .testi-header { text-align: center; margin-bottom: 3rem; }
-  .testi-header .section-line { margin: 0 auto 2rem; }
-  .testi-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
-  }
-  .testi-card {
-    background: var(--dark2); border: 1px solid rgba(212,175,55,0.1);
-    border-radius: 4px; padding: 2rem; position: relative;
-    transition: all 0.3s;
-  }
-  .testi-card:hover {
-    border-color: rgba(212,175,55,0.3);
-    transform: translateY(-4px);
-  }
-  .quote-icon {
-    font-size: 4rem; color: var(--gold); opacity: 0.15;
-    font-family: Georgia, serif; line-height: 1;
-    position: absolute; top: 0.5rem; left: 1.5rem;
-  }
-  .testi-text {
-    font-size: 0.92rem; line-height: 1.7;
-    color: rgba(248,244,237,0.75); margin-bottom: 1.5rem;
-    position: relative; z-index: 1;
-  }
-  .testi-author { display: flex; align-items: center; gap: 1rem; }
-  .testi-avatar {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold), var(--red));
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 1rem; color: var(--black); flex-shrink: 0;
-  }
-  .testi-info strong { display: block; font-size: 0.88rem; color: var(--white); }
-  .testi-info span { font-size: 0.75rem; color: var(--gold); }
-  .stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 0.8rem; }
-
-  /* WHY SECTION */
-  .why { background: var(--black); }
-  .why-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
-    margin-top: 3rem;
-  }
-  .why-card {
-    padding: 2rem; border: 1px solid rgba(212,175,55,0.1);
-    border-radius: 4px; background: var(--dark);
-    text-align: center; transition: all 0.3s;
-    position: relative; overflow: hidden;
-  }
-  .why-card::before {
-    content: '';
-    position: absolute; bottom: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(to right, var(--gold), var(--red));
-    transform: scaleX(0); transition: transform 0.3s;
-    transform-origin: left;
-  }
-  .why-card:hover::before { transform: scaleX(1); }
-  .why-card:hover { border-color: rgba(212,175,55,0.3); transform: translateY(-4px); }
-  .why-icon {
-    width: 60px; height: 60px; border-radius: 50%;
-    margin: 0 auto 1.2rem;
-    display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
-  }
-  .wi-1 { background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.05)); }
-  .wi-2 { background: linear-gradient(135deg, rgba(192,57,43,0.15), rgba(192,57,43,0.05)); }
-  .wi-3 { background: linear-gradient(135deg, rgba(93,173,226,0.15), rgba(93,173,226,0.05)); }
-  .wi-4 { background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(93,173,226,0.05)); }
-  .why-card h4 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem; margin-bottom: 0.6rem; font-weight: 700;
-  }
-  .why-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
-
-  /* SOCIAL SECTION */
-  .social-section {
-    background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
-    text-align: center; padding: 5rem 2rem;
-  }
-  .social-section h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    margin-bottom: 0.5rem;
-  }
-  .social-section p {
-    color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1rem;
-  }
-  .social-links {
-    display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
-  }
-  .social-btn {
-    display: inline-flex; align-items: center; gap: 0.8rem;
-    padding: 1rem 2rem; border-radius: 3px;
-    text-decoration: none; font-weight: 600;
-    font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;
-    transition: all 0.3s; border: 2px solid transparent;
-  }
-  .social-btn.instagram {
-    background: linear-gradient(135deg, #E1306C, #C13584, #833AB4);
-    color: white;
-  }
-  .social-btn.instagram:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(225,48,108,0.4); }
-  .social-btn.telegram {
-    background: #0088cc; color: white;
-  }
-  .social-btn.telegram:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,136,204,0.4); }
-  .social-icon { font-size: 1.3rem; }
-
-  /* CONTACT */
-  .contact { background: var(--black); }
-  .contact-inner {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
-  }
-  .contact-info h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem;
-  }
-  .contact-info p { color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem; }
-  .contact-items { display: flex; flex-direction: column; gap: 1rem; }
-  .contact-item {
-    display: flex; align-items: center; gap: 1rem;
-    padding: 1rem; background: var(--dark);
-    border: 1px solid rgba(212,175,55,0.1); border-radius: 3px;
-    transition: border-color 0.3s;
-  }
-  .contact-item:hover { border-color: rgba(212,175,55,0.3); }
-  .contact-item-icon {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(212,175,55,0.05));
-    display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
-  }
-  .contact-item strong { display: block; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2px; }
-  .contact-item span { font-size: 0.9rem; color: var(--white); }
-
-  .contact-form { }
-  .form-group { margin-bottom: 1.2rem; }
-  .form-group label {
-    display: block; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 0.5rem; font-weight: 500;
-  }
-  .form-group input, .form-group textarea, .form-group select {
-    width: 100%; background: var(--dark);
-    border: 1px solid rgba(212,175,55,0.2); border-radius: 2px;
-    padding: 0.85rem 1rem; color: var(--white);
-    font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
-    outline: none; transition: border-color 0.3s;
-  }
-  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-    border-color: rgba(212,175,55,0.5);
-    box-shadow: 0 0 0 3px rgba(212,175,55,0.06);
-  }
-  .form-group textarea { min-height: 120px; resize: vertical; }
-  .form-group select option { background: var(--dark2); }
-
-  /* CTA STRIP */
-  .cta-strip {
-    background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-dark));
-    padding: 4rem 2rem; text-align: center;
-    position: relative; overflow: hidden;
-  }
-  .cta-strip::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  }
-  .cta-strip h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2rem, 5vw, 4rem); color: var(--black);
-    letter-spacing: 4px; margin-bottom: 0.5rem; position: relative;
-  }
-  .cta-strip p { color: rgba(0,0,0,0.6); margin-bottom: 2rem; position: relative; font-size: 1rem; }
-  .cta-strip .btn-primary {
-    background: var(--black); color: var(--gold);
-    position: relative;
-  }
-  .cta-strip .btn-primary:hover { background: var(--dark2); box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
-  .cta-strip .btn-secondary {
-    border-color: rgba(0,0,0,0.3); color: var(--black);
-    position: relative;
-  }
-  .cta-strip .btn-secondary:hover { background: rgba(0,0,0,0.1); }
-
-  /* FOOTER */
-  footer {
-    background: var(--dark); padding: 4rem 2rem 2rem;
-    border-top: 1px solid rgba(212,175,55,0.1);
-  }
-  .footer-top {
-    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 3rem; margin-bottom: 3rem;
-  }
-  .footer-brand .nav-logo { display: inline-block; margin-bottom: 1rem; font-size: 2rem; }
-  .footer-brand p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; max-width: 280px; }
-  .footer-col h5 {
-    font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 1.2rem;
-  }
-  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
-  .footer-col ul a {
-    color: var(--text-muted); text-decoration: none; font-size: 0.85rem;
-    transition: color 0.3s;
-  }
-  .footer-col ul a:hover { color: var(--white); }
-  .footer-bottom {
-    padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05);
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: gap 1rem;
-  }
-  .footer-bottom p { font-size: 0.8rem; color: var(--text-muted); }
-  .footer-bottom span { color: var(--red); }
-
-  /* SCROLL INDICATOR */
-  .scroll-progress {
-    position: fixed; top: 0; left: 0; height: 3px;
-    background: linear-gradient(to right, var(--gold), var(--red), var(--sky));
-    z-index: 9999; transition: width 0.1s;
-  }
-
-  /* REVEAL ANIMATION */
-  .reveal {
-    opacity: 0; transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
+  /* Scroll animations */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  /* RESPONSIVE */
-  @media (max-width: 1024px) {
-    .courses-grid { grid-template-columns: repeat(2, 1fr); }
-    .why-grid { grid-template-columns: repeat(2, 1fr); }
-    .footer-top { grid-template-columns: 1fr 1fr; }
+  /* Ticker */
+  .ticker-wrap {
+    overflow: hidden;
+    background: linear-gradient(90deg, var(--gold), var(--gold-dim));
+    padding: 10px 0;
+    white-space: nowrap;
   }
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.2rem; }
-    .nav-links { display: none; }
-    .hamburger { display: flex; }
-    .hero-content { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
-    .hero-visual { order: -1; }
-    .profile-frame { width: 280px; height: 340px; margin: 0 auto; }
-    .hero-bio { max-width: 100%; }
-    .hero-stats { justify-content: center; }
-    .hero-ctas { justify-content: center; }
-    .floating-tag.tag-1 { left: 0; bottom: -1.5rem; }
-    .floating-tag.tag-2 { right: 0; top: 0.5rem; }
-    .about-inner { grid-template-columns: 1fr; }
-    .about-img-stack { height: 280px; }
-    .about-img-main { width: 200px; height: 260px; }
-    .about-features { grid-template-columns: 1fr; }
-    .courses-grid { grid-template-columns: 1fr; }
-    .testi-grid { grid-template-columns: 1fr; }
-    .why-grid { grid-template-columns: 1fr 1fr; }
-    .contact-inner { grid-template-columns: 1fr; }
-    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
-    .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+  .ticker-track {
+    display: inline-flex;
+    gap: 0;
+    animation: ticker 25s linear infinite;
   }
-  @media (max-width: 480px) {
-    .why-grid { grid-template-columns: 1fr; }
-    .hero-stats { gap: 1.2rem; }
-    section { padding: 4rem 1.2rem; }
-    .btn-primary, .btn-secondary { padding: 0.8rem 1.4rem; font-size: 0.8rem; }
+  .ticker-item {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--black);
+    padding: 0 32px;
   }
-  @media (hover: none) { .cursor, .cursor-ring { display: none; } body { cursor: auto; } }
+  .ticker-sep { color: var(--black); opacity: 0.4; }
+  @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-<div class="scroll-progress" id="scrollProgress"></div>
-
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">ABHI</a>
+  <div class="nav-logo">Abhi Talks</div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
-    <li><a href="#courses">Courses</a></li>
-    <li><a href="#testimonials">Reviews</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#courses" class="nav-cta">Enroll Now</a></li>
+    <li><a href="#course">AI Course</a></li>
+    <li><a href="#content">Content</a></li>
+    <li><a href="#social">Connect</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
   </ul>
-  <div class="hamburger" id="hamburger">
+  <div class="hamburger" onclick="openMenu()">
     <span></span><span></span><span></span>
   </div>
 </nav>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <button class="mobile-close" id="mobileClose">✕</button>
-  <a href="#about" class="mm-link">About</a>
-  <a href="#courses" class="mm-link">Courses</a>
-  <a href="#testimonials" class="mm-link">Reviews</a>
-  <a href="#contact" class="mm-link">Contact</a>
+  <button class="mobile-close" onclick="closeMenu()">✕</button>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#course" onclick="closeMenu()">AI Course</a>
+  <a href="#content" onclick="closeMenu()">Content</a>
+  <a href="#social" onclick="closeMenu()">Connect</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
 </div>
 
 <!-- HERO -->
-<section class="hero" id="home">
+<section id="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
-
-  <div class="hero-content">
+  <div class="hero-inner">
     <div class="hero-text">
       <div class="hero-badge">
-        <span class="badge-dot"></span>
+        <div class="hero-badge-dot"></div>
         Digital Creator & AI Educator
       </div>
-      <h1 class="hero-name"><span>Abhi</span><br>Talks Here</h1>
-      <p class="hero-handle">@abhitalkshere</p>
-      <p class="hero-bio">I'm a digital creator passionate about producing engaging content that entertains, informs, and inspires. Through videos, photos, and stories, I help my audience discover new perspectives and stay connected with the latest trends.</p>
+      <h1 class="hero-name">Abhi<br>Talks Here</h1>
+      <p class="hero-title">Entertain · Inform · Inspire</p>
+      <p class="hero-bio">
+        I'm a digital creator passionate about <strong>engaging content</strong> that changes how you see the world. Through videos, photos, and stories — I help my audience discover <strong>new perspectives</strong>, stay on trend, and now <strong>master AI</strong> to supercharge their lives.
+      </p>
+      <div class="hero-actions">
+        <a href="#course" class="btn-primary">
+          🎓 Enroll in AI Course
+        </a>
+        <a href="#social" class="btn-secondary">
+          📲 Follow on Instagram
+        </a>
+      </div>
       <div class="hero-stats">
-        <div class="stat">
-          <div class="stat-num">10K+</div>
+        <div>
+          <div class="stat-val">10K+</div>
           <div class="stat-label">Followers</div>
         </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <div class="stat-num">500+</div>
-          <div class="stat-label">Students</div>
+        <div>
+          <div class="stat-val">50+</div>
+          <div class="stat-label">Videos</div>
         </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <div class="stat-num">3</div>
-          <div class="stat-label">AI Courses</div>
+        <div>
+          <div class="stat-val">100%</div>
+          <div class="stat-label">Real Value</div>
         </div>
-      </div>
-      <div class="hero-ctas">
-        <a href="#courses" class="btn-primary">⚡ Explore Courses</a>
-        <a href="#about" class="btn-secondary">Learn More →</a>
       </div>
     </div>
-
     <div class="hero-visual">
-      <div class="profile-frame">
-        <div class="profile-border"></div>
-        <div class="profile-img-wrap">
-          <img src="https://ui-avatars.com/api/?name=AT&background=0A0A0A&color=D4AF37&size=400&bold=true&font-size=0.35" alt="Abhi Talks Here" id="profileImg">
+      <div class="profile-ring">
+        <div class="ring-outer"></div>
+        <div class="ring-inner">
+          <img src="https://lh3.googleusercontent.com/d/1YvtTzcU88fEbfFE2L" 
+               onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'320\' height=\'320\'><rect fill=\'%23181818\' width=\'320\' height=\'320\'/><text x=\'50%25\' y=\'50%25\' font-family=\'sans-serif\' font-size=\'80\' fill=\'%23D4A017\' text-anchor=\'middle\' dominant-baseline=\'middle\'>A</text></svg>'"
+               alt="Abhi Talks Here">
         </div>
-        <div class="floating-tag tag-1">
-          <span class="tag-label">Status</span>
-          <span class="tag-value">🔴 Live</span>
+        <div class="profile-badge-ig">
+          📸 @abhitalkshere
         </div>
-        <div class="floating-tag tag-2">
-          <span class="tag-label">Content Creator</span>
-          <span class="tag-value">AI Expert</span>
+        <div class="floating-chip chip-1">
+          <span class="chip-icon">🤖</span> AI Expert
+        </div>
+        <div class="floating-chip chip-2">
+          <span class="chip-icon">🔥</span> Trending Creator
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ticker-item">Digital Creator</span><span class="ticker-sep">✦</span>
+    <span class="ticker-item">AI Educator</span><span class="ticker-sep">✦</span>
+    <span class="ticker-item">Content Strategist</span><span class="ticker-sep">✦</span>
+    <span class="ticker-item">Inspire. Educate. Grow.</span><span class="ticker-sep">✦</span>
+    <span class="ticker-item">AI Course Now Available</span><span class="ticker-sep">✦</span>
+    <span class="ticker-item">Join the Community</span><span class="ticker-sep">✦</span>
+    <!-- duplicated for seamless loop -->
+    <span class="ticker-item">Digital Creator</span><span class="ticker-sep">✦</span>
+    <span class="ticker-item">AI Educator</span><span class="ticker-sep">✦</span>
+    <span class="ticker-item">Content Strategist</span><span class="ticker-sep">✦</span>
+    <span class="ticker-item">Inspire. Educate. Grow.</span><span class="ticker-sep">✦</span>
+    <span class="ticker-item">AI Course Now Available</span><span class="ticker-sep">✦</span>
+    <span class="ticker-item">Join the Community</span><span class="ticker-sep">✦</span>
+  </div>
+</div>
 
 <!-- ABOUT -->
-<section class="about" id="about">
+<section id="about">
   <div class="container">
-    <div class="about-inner">
-      <div class="about-visual reveal">
-        <div class="about-img-stack">
-          <div class="about-accent-box"></div>
-          <div class="about-img-main">
-            <img src="https://ui-avatars.com/api/?name=Abhi&background=1a1a1a&color=D4AF37&size=300&bold=true&font-size=0.5" alt="Abhi">
-          </div>
-          <div class="about-quote-box">
-            <p>"My mission is to make AI accessible to everyone."</p>
-            <span>— Abhi</span>
-          </div>
-        </div>
-      </div>
-      <div class="about-text reveal">
-        <span class="section-label">About Me</span>
-        <h2 class="section-title">I Create Content<br>That <span>Changes</span> Lives</h2>
-        <div class="section-line"></div>
-        <h3>Creator. Educator. Innovator.</h3>
-        <p>Behind every post, every reel, every story is a genuine desire to connect and inspire. I've spent years studying digital content creation and artificial intelligence to bring you the most relevant, actionable knowledge in today's fast-moving digital world.</p>
-        <p>My AI courses have helped hundreds of students land better jobs, build their own businesses, and navigate the future of technology with confidence. I break down complex concepts into simple, practical lessons you can apply immediately.</p>
+    <div class="about-grid">
+      <div class="about-content reveal">
+        <p class="section-label">Who I Am</p>
+        <h2 class="section-title">A Creator Who Means Business</h2>
+        <div class="gold-line"></div>
+        <p class="section-sub about-sub" style="margin-bottom:32px">
+          I don't just make content — I craft experiences. Every video, reel, and story is designed to add real value to your life. Now I'm channeling everything I know about the digital world into an AI course that'll change how you work, create, and earn.
+        </p>
         <div class="about-features">
-          <div class="about-feature">
-            <div class="feature-icon">🤖</div>
-            <div class="feature-text">
-              <strong>AI Specialist</strong>
-              <span>Practical AI education</span>
+          <div class="about-feat">
+            <div class="feat-icon">🎬</div>
+            <div class="feat-text">
+              <strong>Engaging Video Content</strong>
+              <span>Reels, shorts, and long-form videos built to entertain and teach.</span>
             </div>
           </div>
-          <div class="about-feature">
-            <div class="feature-icon">📱</div>
-            <div class="feature-text">
-              <strong>Content Creator</strong>
-              <span>Engaging digital media</span>
+          <div class="about-feat">
+            <div class="feat-icon">📈</div>
+            <div class="feat-text">
+              <strong>Trend-First Approach</strong>
+              <span>Always ahead of the curve — you'll never miss what matters.</span>
             </div>
           </div>
-          <div class="about-feature">
-            <div class="feature-icon">🎓</div>
-            <div class="feature-text">
-              <strong>Mentor</strong>
-              <span>500+ students guided</span>
+          <div class="about-feat">
+            <div class="feat-icon">🤖</div>
+            <div class="feat-text">
+              <strong>AI Made Simple</strong>
+              <span>Breaking down complex AI tools into practical, actionable skills.</span>
             </div>
           </div>
-          <div class="about-feature">
-            <div class="feature-icon">🌍</div>
-            <div class="feature-text">
-              <strong>Global Reach</strong>
-              <span>Worldwide community</span>
+        </div>
+      </div>
+      <div class="about-visual reveal">
+        <div class="about-card">
+          <div class="card-num">50K+</div>
+          <div class="card-label">Content Views</div>
+        </div>
+        <div class="about-card">
+          <div class="card-num">3+</div>
+          <div class="card-label">Years Creating</div>
+        </div>
+        <div class="about-card">
+          <div class="card-num">500+</div>
+          <div class="card-label">Students Taught</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSE -->
+<section id="course">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;max-width:600px;margin:0 auto 60px">
+      <p class="section-label">Featured Offer</p>
+      <h2 class="section-title">My AI Course</h2>
+      <div class="gold-line" style="margin:0 auto 16px"></div>
+      <p class="section-sub" style="margin:0 auto">Master artificial intelligence and use it to create, grow, and earn — even with zero technical background.</p>
+    </div>
+    <div class="course-wrapper reveal">
+      <div class="course-header-band">
+        <span>🔥 Limited Early Access — Enroll Now</span>
+      </div>
+      <div class="course-body">
+        <div class="course-grid">
+          <div>
+            <h3 class="course-title">Master <span>AI Tools</span> & Transform Your Digital Life</h3>
+            <p class="course-desc">This isn't a theory course. You'll use real AI tools from day one — building automations, generating content, and making money smarter. Whether you're a creator, freelancer, or complete beginner, this course meets you where you are.</p>
+            <div class="curriculum">
+              <div class="curriculum-item">
+                <span class="curr-num">01</span>
+                <span class="curr-text">Introduction to AI — What It Is & Why It Matters Now</span>
+                <span class="curr-check">✦</span>
+              </div>
+              <div class="curriculum-item">
+                <span class="curr-num">02</span>
+                <span class="curr-text">ChatGPT, Gemini & Claude — Master the Big Three</span>
+                <span class="curr-check">✦</span>
+              </div>
+              <div class="curriculum-item">
+                <span class="curr-num">03</span>
+                <span class="curr-text">AI for Content Creation — Videos, Reels & Scripts</span>
+                <span class="curr-check">✦</span>
+              </div>
+              <div class="curriculum-item">
+                <span class="curr-num">04</span>
+                <span class="curr-text">AI Image & Design Tools — Midjourney, DALL·E & More</span>
+                <span class="curr-check">✦</span>
+              </div>
+              <div class="curriculum-item">
+                <span class="curr-num">05</span>
+                <span class="curr-text">Automate Your Life — Workflows That Work for You</span>
+                <span class="curr-check">✦</span>
+              </div>
+              <div class="curriculum-item">
+                <span class="curr-num">06</span>
+                <span class="curr-text">Monetize AI — Turn These Skills Into Real Income</span>
+                <span class="curr-check">✦</span>
+              </div>
+            </div>
+            <a href="https://t.me/abhitalkshere" target="_blank" class="btn-primary" style="display:inline-flex">
+              💬 Join Telegram for Course Info
+            </a>
+          </div>
+          <div>
+            <div class="course-pricing">
+              <div class="price-tag">HOT DEAL</div>
+              <div class="price-val">₹999</div>
+              <div class="price-period">One-time · Lifetime Access</div>
+              <ul class="price-features">
+                <li>6 comprehensive modules</li>
+                <li>HD video lessons</li>
+                <li>Downloadable resources</li>
+                <li>Private community access</li>
+                <li>Direct Q&A with Abhi</li>
+                <li>Certificate of completion</li>
+                <li>Free future updates</li>
+              </ul>
+              <button class="btn-enroll" onclick="startPayment()">🔐 Pay ₹999 & Unlock Course</button>
+              <p class="guarantee">🔒 Secured by Razorpay · 7-day money-back guarantee</p>
             </div>
           </div>
         </div>
@@ -979,268 +1036,128 @@
   </div>
 </section>
 
-<!-- WHY CHOOSE ME -->
-<section class="why" id="why">
+<!-- CONTENT -->
+<section id="content">
   <div class="container">
-    <div style="text-align:center; max-width:550px; margin:0 auto 1rem;" class="reveal">
-      <span class="section-label">Why Choose Me</span>
-      <h2 class="section-title">What Makes My<br>Courses <span>Different</span></h2>
-      <div class="section-line" style="margin:0 auto 1rem;"></div>
+    <div class="section-header reveal">
+      <p class="section-label">Latest Content</p>
+      <h2 class="section-title">Watch. Learn. Grow.</h2>
+      <div class="gold-line"></div>
     </div>
-    <div class="why-grid">
-      <div class="why-card reveal">
-        <div class="why-icon wi-1">🚀</div>
-        <h4>Beginner Friendly</h4>
-        <p>No prior experience needed. Every concept is explained from scratch with real-world examples.</p>
-      </div>
-      <div class="why-card reveal">
-        <div class="why-icon wi-2">🔥</div>
-        <h4>Practical Projects</h4>
-        <p>Build real AI projects from day one. Learn by doing, not just watching boring lectures.</p>
-      </div>
-      <div class="why-card reveal">
-        <div class="why-icon wi-3">💬</div>
-        <h4>Community Support</h4>
-        <p>Join our active Telegram group with direct access to me and fellow students.</p>
-      </div>
-      <div class="why-card reveal">
-        <div class="why-icon wi-4">♾️</div>
-        <h4>Lifetime Access</h4>
-        <p>Pay once, learn forever. All future updates included at no extra cost.</p>
-      </div>
+    <div class="content-tabs">
+      <button class="tab-btn active">All</button>
+      <button class="tab-btn">AI</button>
+      <button class="tab-btn">Lifestyle</button>
+      <button class="tab-btn">Trends</button>
     </div>
-  </div>
-</section>
-
-<!-- COURSES -->
-<section class="courses" id="courses">
-  <div class="container">
-    <div class="courses-header reveal">
-      <span class="section-label">My Courses</span>
-      <h2 class="section-title">Master AI with<br><span>Expert-Led</span> Courses</h2>
-      <div class="section-line"></div>
-      <p style="color:var(--text-muted); font-size:0.95rem;">Practical, project-based AI courses designed for the modern learner. Start your AI journey today.</p>
-    </div>
-    <div class="courses-grid">
-      <!-- Course 1 -->
-      <div class="course-card reveal">
-        <div class="course-thumb">
-          <div class="course-thumb-bg ct-1">🤖</div>
-          <span class="course-badge">NEW</span>
-        </div>
-        <div class="course-body">
-          <span class="course-level">⭐ Beginner</span>
-          <h3 class="course-name">AI BASIC COURSE</h3>
-          <p class="course-desc">Your complete introduction to artificial intelligence. Learn how AI works, its applications, and how to use it in your daily life and career.</p>
-          <div class="course-meta">
-            <span>📚 24 Lessons</span>
-            <span>⏱ 8 Hours</span>
-            <span>📜 Certificate</span>
-          </div>
-          <div class="course-footer">
-            <div class="course-price">
-              <small>₹4,999</small>
-              ₹999
-            </div>
-            <a href="#contact" class="btn-enroll">Enroll</a>
-          </div>
+    <div class="content-grid reveal">
+      <div class="content-card">
+        <div class="content-thumb" style="background:linear-gradient(135deg,#1a0a2e,#2d1b69)">🤖</div>
+        <div class="content-info">
+          <div class="content-tag">AI</div>
+          <div class="content-title">5 AI Tools That Will Change Your Life in 2025</div>
+          <div class="content-meta">12.4K views · 3 days ago</div>
         </div>
       </div>
-      <!-- Course 2 FEATURED -->
-      <div class="course-card featured reveal">
-        <div class="course-thumb">
-          <div class="course-thumb-bg ct-2">🧠</div>
-          <span class="course-badge">BESTSELLER</span>
-        </div>
-        <div class="course-body">
-          <span class="course-level">🔥 Intermediate</span>
-          <h3 class="course-name">ChatGPT & Prompt Engineering Pro</h3>
-          <p class="course-desc">Unlock the full power of ChatGPT and large language models. Master prompt engineering to 10x your productivity and build AI-powered workflows.</p>
-          <div class="course-meta">
-            <span>📚 36 Lessons</span>
-            <span>⏱ 12 Hours</span>
-            <span>📜 Certificate</span>
-          </div>
-          <div class="course-footer">
-            <div class="course-price">
-              <small>₹7,999</small>
-              ₹2,999
-            </div>
-            <a href="#contact" class="btn-enroll">Enroll</a>
-          </div>
+      <div class="content-card">
+        <div class="content-thumb" style="background:linear-gradient(135deg,#1a0a00,#3d2000)">📱</div>
+        <div class="content-info">
+          <div class="content-tag">Trends</div>
+          <div class="content-title">How I Grew My Instagram to 10K — Full Strategy</div>
+          <div class="content-meta">8.7K views · 1 week ago</div>
         </div>
       </div>
-      <!-- Course 3 -->
-      <div class="course-card reveal">
-        <div class="course-thumb">
-          <div class="course-thumb-bg ct-3">💡</div>
-          <span class="course-badge">ADVANCED</span>
-        </div>
-        <div class="course-body">
-          <span class="course-level">🚀 Advanced</span>
-          <h3 class="course-name">AI Business Automation Blueprint</h3>
-          <p class="course-desc">Build automated AI systems for your business. From chatbots to content pipelines — learn to build tools that generate income on autopilot.</p>
-          <div class="course-meta">
-            <span>📚 48 Lessons</span>
-            <span>⏱ 18 Hours</span>
-            <span>📜 Certificate</span>
-          </div>
-          <div class="course-footer">
-            <div class="course-price">
-              <small>₹12,999</small>
-              ₹4,999
-            </div>
-            <a href="#contact" class="btn-enroll">Enroll</a>
-          </div>
+      <div class="content-card">
+        <div class="content-thumb" style="background:linear-gradient(135deg,#001a0a,#003d20)">💡</div>
+        <div class="content-info">
+          <div class="content-tag">Lifestyle</div>
+          <div class="content-title">My Daily Creator Routine — What Actually Works</div>
+          <div class="content-meta">6.2K views · 2 weeks ago</div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="testimonials" id="testimonials">
-  <div class="container">
-    <div class="testi-header reveal">
-      <span class="section-label">Student Reviews</span>
-      <h2 class="section-title">What My <span>Students</span> Say</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="testi-grid">
-      <div class="testi-card reveal">
-        <div class="quote-icon">"</div>
-        <div class="stars">★★★★★</div>
-        <p class="testi-text">Abhi's AI course completely changed how I work. I've automated half of my daily tasks and now I have time to focus on growing my business. Best investment of 2024!</p>
-        <div class="testi-author">
-          <div class="testi-avatar">R</div>
-          <div class="testi-info">
-            <strong>Rahul Sharma</strong>
-            <span>Entrepreneur</span>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card reveal">
-        <div class="quote-icon">"</div>
-        <div class="stars">★★★★★</div>
-        <p class="testi-text">I was completely new to AI. Abhi's teaching style is so clear and friendly. Within 2 weeks I was building my own AI tools. The Telegram community support is amazing!</p>
-        <div class="testi-author">
-          <div class="testi-avatar">P</div>
-          <div class="testi-info">
-            <strong>Priya Nair</strong>
-            <span>Freelancer</span>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card reveal">
-        <div class="quote-icon">"</div>
-        <div class="stars">★★★★★</div>
-        <p class="testi-text">The prompt engineering course alone helped me land a 40% raise at my job. My manager was blown away by my productivity. Thank you Abhi for this life-changing content!</p>
-        <div class="testi-author">
-          <div class="testi-avatar">A</div>
-          <div class="testi-info">
-            <strong>Arun Menon</strong>
-            <span>IT Professional</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SOCIAL SECTION -->
-<div class="social-section reveal">
-  <div class="container">
-    <h2 class="section-title">Follow the <span>Journey</span></h2>
-    <p>Join thousands of followers getting daily AI tips, content creation hacks, and inspiration.</p>
-    <div class="social-links">
-      <a href="https://www.instagram.com/abhitalkshere?igsh=MWtydjlsYTdxMzY1Yw==" target="_blank" class="social-btn instagram">
-        <span class="social-icon">📸</span> Follow on Instagram
-      </a>
-      <a href="https://t.me/abhitalkshere" target="_blank" class="social-btn telegram">
-        <span class="social-icon">✈️</span> Join Telegram
+    <div style="text-align:center;margin-top:48px">
+      <a href="https://www.instagram.com/abhitalkshere?igsh=MWtydjlsYTdxMzY1Yw==" target="_blank" class="btn-secondary">
+        📸 See All Content on Instagram →
       </a>
     </div>
   </div>
-</div>
+</section>
 
-<!-- CTA STRIP -->
-<div class="cta-strip">
-  <h2>READY TO MASTER AI?</h2>
-  <p>Join 500+ students who've already transformed their careers with AI education</p>
-  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-    <a href="#courses" class="btn-primary">⚡ Start Learning Today</a>
-    <a href="#contact" class="btn-secondary">Talk to Me First</a>
+<!-- SOCIAL -->
+<section id="social">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;max-width:500px;margin:0 auto">
+      <p class="section-label">Find Me Online</p>
+      <h2 class="section-title">Join the Community</h2>
+      <div class="gold-line" style="margin:0 auto"></div>
+      <p class="section-sub" style="margin:0 auto">Stay connected across platforms — content, community, and course updates all in one place.</p>
+    </div>
+    <div class="social-grid reveal">
+      <a href="https://www.instagram.com/abhitalkshere?igsh=MWtydjlsYTdxMzY1Yw==" target="_blank" class="social-card ig">
+        <div class="social-icon">📸</div>
+        <div class="social-info">
+          <div class="social-name">Instagram</div>
+          <div class="social-handle">@abhitalkshere</div>
+          <div class="social-cta">Follow Now <span class="social-arrow">→</span></div>
+        </div>
+      </a>
+      <a href="https://t.me/abhitalkshere" target="_blank" class="social-card tg">
+        <div class="social-icon">✈️</div>
+        <div class="social-info">
+          <div class="social-name">Telegram</div>
+          <div class="social-handle">@abhitalkshere</div>
+          <div class="social-cta">Join Channel <span class="social-arrow">→</span></div>
+        </div>
+      </a>
+    </div>
   </div>
-</div>
+</section>
 
 <!-- CONTACT -->
-<section class="contact" id="contact">
+<section id="contact">
   <div class="container">
-    <div class="contact-inner">
-      <div class="contact-info reveal">
-        <span class="section-label">Get In Touch</span>
-        <h2 class="section-title">Let's <span>Connect</span></h2>
-        <div class="section-line"></div>
-        <p>Have questions about my courses? Want to collaborate or just say hello? I'd love to hear from you. Reach out through any of the channels below.</p>
-        <div class="contact-items">
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="section-label">Get In Touch</p>
+        <h2 class="section-title">Let's Work Together</h2>
+        <div class="gold-line"></div>
+        <p class="section-sub" style="margin-bottom:0">Have a collaboration idea, course query, or just want to say hi? Reach out — I personally read every message.</p>
+        <div class="contact-info">
           <div class="contact-item">
-            <div class="contact-item-icon">📧</div>
-            <div>
-              <strong>Email</strong>
-              <span>abhitalks678999@gmail.com</span>
-            </div>
+            <div class="contact-icon">📧</div>
+            <a href="mailto:abhitalks678999@gmail.com">abhitalks678999@gmail.com</a>
           </div>
           <div class="contact-item">
-            <div class="contact-item-icon">📞</div>
-            <div>
-              <strong>Phone / WhatsApp</strong>
-              <span>+91 70658791</span>
-            </div>
+            <div class="contact-icon">📞</div>
+            <a href="tel:70658791">+91 70658791</a>
           </div>
           <div class="contact-item">
-            <div class="contact-item-icon">✈️</div>
-            <div>
-              <strong>Telegram</strong>
-              <span>@abhitalkshere</span>
-            </div>
-          </div>
-          <div class="contact-item">
-            <div class="contact-item-icon">📸</div>
-            <div>
-              <strong>Instagram</strong>
-              <span>@abhitalkshere</span>
-            </div>
+            <div class="contact-icon">✈️</div>
+            <a href="https://t.me/abhitalkshere" target="_blank">Telegram: @abhitalkshere</a>
           </div>
         </div>
       </div>
-      <div class="contact-form reveal">
-        <span class="section-label">Send a Message</span>
-        <div class="form-group">
-          <label>Your Name</label>
-          <input type="text" placeholder="Enter your full name">
+      <div class="reveal">
+        <div class="contact-form">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="e.g. Rahul Sharma">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="you@email.com">
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <input type="text" placeholder="e.g. AI Course Inquiry">
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Tell me what's on your mind..."></textarea>
+          </div>
+          <button class="btn-send" onclick="handleContact()">Send Message ✦</button>
         </div>
-        <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" placeholder="your@email.com">
-        </div>
-        <div class="form-group">
-          <label>Interested In</label>
-          <select>
-            <option value="">Select a course or topic</option>
-            <option>AI Fundamentals Masterclass</option>
-            <option>ChatGPT & Prompt Engineering Pro</option>
-            <option>AI Business Automation Blueprint</option>
-            <option>Collaboration / Sponsorship</option>
-            <option>General Inquiry</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Message</label>
-          <textarea placeholder="Tell me how I can help you..."></textarea>
-        </div>
-        <button class="btn-primary" style="width:100%;justify-content:center;" onclick="handleSubmit(this)">
-          🚀 Send Message
-        </button>
       </div>
     </div>
   </div>
@@ -1248,132 +1165,182 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <a href="#" class="nav-logo">ABHI TALKS HERE</a>
-        <p>Digital creator and AI educator helping you master the future. Join the community and transform your career.</p>
-      </div>
-      <div class="footer-col">
-        <h5>Quick Links</h5>
-        <ul>
-          <li><a href="#about">About Me</a></li>
-          <li><a href="#courses">Courses</a></li>
-          <li><a href="#testimonials">Reviews</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Courses</h5>
-        <ul>
-          <li><a href="#courses">AI Fundamentals</a></li>
-          <li><a href="#courses">Prompt Engineering</a></li>
-          <li><a href="#courses">AI Automation</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Connect</h5>
-        <ul>
-          <li><a href="https://www.instagram.com/abhitalkshere" target="_blank">Instagram</a></li>
-          <li><a href="https://t.me/abhitalkshere" target="_blank">Telegram</a></li>
-          <li><a href="mailto:abhitalks678999@gmail.com">Email Me</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2025 Abhi Talks Here. All rights reserved. Made with <span>♥</span></p>
-      <p style="color:var(--text-muted);font-size:0.78rem;">@abhitalkshere | Digital Creator & AI Educator</p>
-    </div>
-  </div>
+  <div class="footer-logo">Abhi Talks Here</div>
+  <p class="footer-tagline">Entertain · Inform · Inspire · Educate</p>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#course">AI Course</a></li>
+    <li><a href="#content">Content</a></li>
+    <li><a href="https://www.instagram.com/abhitalkshere?igsh=MWtydjlsYTdxMzY1Yw==" target="_blank">Instagram</a></li>
+    <li><a href="https://t.me/abhitalkshere" target="_blank">Telegram</a></li>
+  </ul>
+  <hr class="footer-divider">
+  <p class="footer-copy">© 2025 <span>@abhitalkshere</span>. All rights reserved. Built with passion.</p>
 </footer>
 
+<!-- Razorpay SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<!-- PAYMENT MODAL (name + email capture before pay) -->
+<div id="payModal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
+  <div style="background:#111;border:1px solid rgba(212,160,23,0.35);border-radius:20px;padding:40px 36px;max-width:440px;width:90%;position:relative;">
+    <button onclick="closePayModal()" style="position:absolute;top:16px;right:20px;background:none;border:none;color:#999;font-size:1.3rem;cursor:pointer;">✕</button>
+    <p style="font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#D4A017;margin-bottom:8px;">Secure Checkout</p>
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:2px;color:#F5F0E8;margin-bottom:4px;">AI Course — ₹999</h3>
+    <p style="font-size:0.82rem;color:#999;margin-bottom:28px;">Enter your details. Your course link unlocks instantly after payment.</p>
+    <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:24px;">
+      <div>
+        <label style="font-size:0.75rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#999;display:block;margin-bottom:6px;">Full Name</label>
+        <input id="payName" type="text" placeholder="e.g. Rahul Sharma" style="width:100%;background:#1a1a1a;border:1px solid rgba(212,160,23,0.2);border-radius:8px;padding:12px 14px;color:#F5F0E8;font-family:'Inter',sans-serif;font-size:0.95rem;outline:none;" onfocus="this.style.borderColor='#D4A017'" onblur="this.style.borderColor='rgba(212,160,23,0.2)'">
+      </div>
+      <div>
+        <label style="font-size:0.75rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#999;display:block;margin-bottom:6px;">Email Address</label>
+        <input id="payEmail" type="email" placeholder="you@email.com" style="width:100%;background:#1a1a1a;border:1px solid rgba(212,160,23,0.2);border-radius:8px;padding:12px 14px;color:#F5F0E8;font-family:'Inter',sans-serif;font-size:0.95rem;outline:none;" onfocus="this.style.borderColor='#D4A017'" onblur="this.style.borderColor='rgba(212,160,23,0.2)'">
+      </div>
+      <div>
+        <label style="font-size:0.75rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#999;display:block;margin-bottom:6px;">Phone Number</label>
+        <input id="payPhone" type="tel" placeholder="9876543210" maxlength="10" style="width:100%;background:#1a1a1a;border:1px solid rgba(212,160,23,0.2);border-radius:8px;padding:12px 14px;color:#F5F0E8;font-family:'Inter',sans-serif;font-size:0.95rem;outline:none;" onfocus="this.style.borderColor='#D4A017'" onblur="this.style.borderColor='rgba(212,160,23,0.2)'">
+      </div>
+    </div>
+    <button onclick="proceedToRazorpay()" style="width:100%;background:linear-gradient(135deg,#D4A017,#B8860B);color:#000;font-weight:800;font-size:1rem;letter-spacing:1.5px;text-transform:uppercase;padding:15px;border:none;border-radius:8px;cursor:pointer;box-shadow:0 4px 24px rgba(212,160,23,0.4);">
+      Pay ₹999 Securely →
+    </button>
+    <p style="font-size:0.72rem;color:#666;text-align:center;margin-top:14px;">🔒 256-bit encrypted · Powered by Razorpay</p>
+  </div>
+</div>
+
+<!-- SUCCESS OVERLAY (course link revealed here) -->
+<div id="successOverlay" style="display:none;position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,0.95);backdrop-filter:blur(12px);align-items:center;justify-content:center;text-align:center;padding:24px;">
+  <div style="max-width:500px;width:100%;">
+    <div style="font-size:4rem;margin-bottom:20px;animation:popIn .5s ease">🎉</div>
+    <p style="font-size:0.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#D4A017;margin-bottom:12px;">Payment Successful</p>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:2px;color:#F5F0E8;margin-bottom:8px;">Welcome to the Course!</h2>
+    <p style="color:#999;font-size:0.9rem;margin-bottom:32px;">Your access link is unlocked below. Save it — this is your personal entry point.</p>
+    <div style="background:#111;border:2px solid #D4A017;border-radius:14px;padding:28px;margin-bottom:24px;">
+      <p style="font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#D4A017;margin-bottom:12px;">🔓 Your Course Access Link</p>
+      <!-- ⬇️  REPLACE THIS URL WITH YOUR ACTUAL COURSE LINK  ⬇️ -->
+      <a id="courseLink" href="https://t.me/abhitalkshere" target="_blank"
+         style="display:inline-block;background:linear-gradient(135deg,#D4A017,#B8860B);color:#000;font-weight:800;font-size:1rem;letter-spacing:1px;text-transform:uppercase;padding:14px 28px;border-radius:8px;text-decoration:none;box-shadow:0 4px 20px rgba(212,160,23,0.5);margin-bottom:12px;">
+        🎓 Enter Course Now
+      </a>
+      <p id="successName" style="font-size:0.82rem;color:#999;margin-top:8px;"></p>
+      <p style="font-size:0.78rem;color:#666;margin-top:4px;">A confirmation was sent to your email.</p>
+    </div>
+    <button onclick="closeSuccess()" style="background:none;border:1px solid rgba(212,160,23,0.3);color:#999;padding:10px 28px;border-radius:8px;cursor:pointer;font-size:0.85rem;">Close</button>
+  </div>
+</div>
+
+<style>
+  @keyframes popIn { 0%{transform:scale(0.5);opacity:0} 70%{transform:scale(1.15)} 100%{transform:scale(1);opacity:1} }
+  #payModal { display:none; }
+  #payModal.open { display:flex; }
+  #successOverlay { display:none; }
+  #successOverlay.open { display:flex; }
+</style>
+
 <script>
-  // Custom Cursor
-  const cursor = document.getElementById('cursor');
-  const cursorRing = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
+  // ══════════════════════════════════════════════════
+  //  RAZORPAY CONFIG — paste your Key ID below
+  // ══════════════════════════════════════════════════
+  const RAZORPAY_KEY = 'rzp_live_T5qVcDUotLRosk';
 
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.transform = `translate(${mx-6}px, ${my-6}px)`;
-  });
+  // The secret course URL shown ONLY after payment
+  const COURSE_URL = 'https://t.me/abhitalkshere'; // ← replace with your real course link
 
-  function animateCursor() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    cursorRing.style.transform = `translate(${rx-18}px, ${ry-18}px)`;
-    requestAnimationFrame(animateCursor);
+  function startPayment() {
+    document.getElementById('payModal').classList.add('open');
   }
-  animateCursor();
+  function closePayModal() {
+    document.getElementById('payModal').classList.remove('open');
+  }
+  function closeSuccess() {
+    document.getElementById('successOverlay').classList.remove('open');
+  }
 
-  document.querySelectorAll('a, button, .course-card, .testi-card, .why-card').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.transform += ' scale(1.5)';
-      cursorRing.style.transform += ' scale(1.5)';
-      cursorRing.style.borderColor = 'var(--red)';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursorRing.style.borderColor = 'var(--gold)';
-    });
-  });
+  function proceedToRazorpay() {
+    const name  = document.getElementById('payName').value.trim();
+    const email = document.getElementById('payEmail').value.trim();
+    const phone = document.getElementById('payPhone').value.trim();
 
-  // Scroll Progress
-  window.addEventListener('scroll', () => {
-    const prog = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-    document.getElementById('scrollProgress').style.width = prog + '%';
-  });
+    if (!name)  { alert('Please enter your name.'); return; }
+    if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
+    if (!phone || phone.length < 10)   { alert('Please enter a valid 10-digit phone.'); return; }
 
-  // Hamburger
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const mobileClose = document.getElementById('mobileClose');
+    // Check Razorpay SDK loaded
+    if (typeof Razorpay === 'undefined') {
+      alert('Razorpay failed to load. Please check your internet connection and try again.');
+      return;
+    }
 
-  hamburger.addEventListener('click', () => mobileMenu.classList.add('active'));
-  mobileClose.addEventListener('click', () => mobileMenu.classList.remove('active'));
-  document.querySelectorAll('.mm-link').forEach(a => {
-    a.addEventListener('click', () => mobileMenu.classList.remove('active'));
-  });
+    const options = {
+      key: RAZORPAY_KEY,
+      amount: 99900,
+      currency: 'INR',
+      name: 'Abhi Talks Here',
+      description: 'AI Course — Lifetime Access',
+      prefill: { name: name, email: email, contact: phone },
+      theme: { color: '#D4A017' },
+      modal: {
+        backdropclose: false,
+        ondismiss: function() { console.log('Razorpay closed by user'); }
+      },
+      handler: function(response) {
+        closePayModal();
+        document.getElementById('courseLink').href = COURSE_URL;
+        document.getElementById('successName').textContent = '✅ Payment ID: ' + response.razorpay_payment_id;
+        document.getElementById('successOverlay').classList.add('open');
+      }
+    };
 
-  // Reveal on Scroll
+    try {
+      const rzp = new Razorpay(options);
+      rzp.on('payment.failed', function(response) {
+        alert('Payment failed: ' + response.error.description + '\nReason: ' + response.error.reason);
+      });
+      rzp.open();
+    } catch(err) {
+      alert('Could not open Razorpay.\n\nError: ' + err.message + '\n\nMost likely your Razorpay account KYC is not yet activated. Go to razorpay.com → Dashboard → Complete Activation.');
+    }
+  }
+
+  // Mobile menu
+  function openMenu() { document.getElementById('mobileMenu').classList.add('open'); }
+  function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
   }, { threshold: 0.12 });
-  reveals.forEach(el => observer.observe(el));
+  reveals.forEach(r => observer.observe(r));
 
-  // Try to load Google profile image
-  const profileImg = document.getElementById('profileImg');
-  const testImg = new Image();
-  testImg.onload = () => { profileImg.src = testImg.src; };
-  testImg.src = 'https://lh3.googleusercontent.com/a/YvtTzcU88fEbfFE2L';
+  // Tab buttons
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
 
-  // Form Submit
-  function handleSubmit(btn) {
-    const orig = btn.innerHTML;
-    btn.innerHTML = '✅ Message Sent!';
-    btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
-    btn.style.color = 'white';
+  // Contact form
+  function handleContact() {
+    const btn = document.querySelector('.btn-send');
+    btn.textContent = '✅ Sent! I\'ll reply soon.';
+    btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
     setTimeout(() => {
-      btn.innerHTML = orig;
-      btn.style.background = '';
-      btn.style.color = '';
+      btn.textContent = 'Send Message ✦';
+      btn.style.background = 'linear-gradient(135deg, var(--gold), #B8860B)';
     }, 3000);
   }
 
-  // Smooth scroll for all anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 60) {
+      nav.style.background = 'rgba(8,8,8,0.97)';
+    } else {
+      nav.style.background = 'rgba(8,8,8,0.82)';
+    }
   });
 </script>
 </body>
