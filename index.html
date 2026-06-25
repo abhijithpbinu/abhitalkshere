@@ -1,692 +1,1380 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abhitalkshere</title>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;600;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #080c10;
-      --bg2: #0d1318;
-      --bg3: #111820;
-      --surface: #141c24;
-      --border: rgba(0,210,180,0.13);
-      --accent: #00d2b4;
-      --accent2: #0af;
-      --accent3: #7c6aff;
-      --text: #d8e8ec;
-      --muted: #556672;
-      --glow: 0 0 28px rgba(0,210,180,0.22);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abhi Talks Here | Digital Creator & AI Course Creator</title>
+<meta name="description" content="Digital creator, content producer, and AI educator. Join thousands learning with Abhi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #D4AF37;
+    --gold-light: #F5D76E;
+    --gold-dark: #A8892A;
+    --red: #C0392B;
+    --red-bright: #E74C3C;
+    --sky: #5DADE2;
+    --sky-bright: #85C1E9;
+    --black: #0A0A0A;
+    --dark: #111111;
+    --dark2: #1A1A1A;
+    --dark3: #222222;
+    --white: #F8F4ED;
+    --text-muted: #888888;
+  }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Syne', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-    }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
 
-    /* ── BACKGROUND GRID ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(0,210,180,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,210,180,0.04) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-      z-index: 0;
-    }
+  /* Custom Cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transition: transform 0.15s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transition: all 0.25s ease;
+    opacity: 0.6;
+  }
 
-    /* ── NOISE GRAIN ── */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      opacity: 0.55;
-      pointer-events: none;
-      z-index: 0;
-    }
+  /* Noise Overlay */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1;
+    opacity: 0.4;
+  }
 
-    /* ── GLOW BLOBS ── */
-    .blob {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(100px);
-      opacity: 0.12;
-      pointer-events: none;
-      z-index: 0;
-      animation: blobDrift 14s ease-in-out infinite alternate;
-    }
-    .blob-1 { width: 480px; height: 480px; background: var(--accent); top: -120px; left: -100px; animation-delay: 0s; }
-    .blob-2 { width: 380px; height: 380px; background: var(--accent3); bottom: 60px; right: -80px; animation-delay: -6s; }
-    .blob-3 { width: 260px; height: 260px; background: var(--accent2); top: 45%; left: 50%; animation-delay: -3s; }
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 1.2rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(212,175,55,0.08);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .nav-links a {
+    color: var(--white); opacity: 0.7;
+    text-decoration: none;
+    font-size: 0.82rem; letter-spacing: 2px;
+    text-transform: uppercase; font-weight: 500;
+    transition: opacity 0.3s, color 0.3s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
 
-    @keyframes blobDrift {
-      from { transform: translate(0,0) scale(1); }
-      to   { transform: translate(30px,30px) scale(1.08); }
-    }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--black) !important;
+    padding: 0.5rem 1.4rem !important;
+    border-radius: 2px;
+    opacity: 1 !important;
+    font-weight: 600 !important;
+    transition: all 0.3s !important;
+  }
+  .nav-cta:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(212,175,55,0.4); }
 
-    /* ── WRAPPER ── */
-    .wrapper {
-      position: relative;
-      z-index: 1;
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 60px 20px 80px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-    }
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--gold); transition: 0.3s;
+  }
+  .mobile-menu {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(10,10,10,0.97); backdrop-filter: blur(20px);
+    flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+  }
+  .mobile-menu.active { display: flex; }
+  .mobile-menu a {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem; letter-spacing: 4px;
+    color: var(--white); text-decoration: none; transition: color 0.3s;
+  }
+  .mobile-menu a:hover { color: var(--gold); }
+  .mobile-close {
+    position: absolute; top: 1.5rem; right: 2rem;
+    font-size: 2rem; color: var(--gold); cursor: pointer; background: none; border: none;
+  }
 
-    /* ── HEADER / AVATAR ── */
-    .header { text-align: center; margin-bottom: 36px; animation: fadeUp 0.7s ease both; }
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    padding: 8rem 2rem 4rem;
+  }
 
-    .avatar-wrap {
-      width: 100px;
-      height: 100px;
-      margin: 0 auto 20px;
-      position: relative;
-    }
-    .avatar-ring {
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      background: conic-gradient(var(--accent), var(--accent2), var(--accent3), var(--accent));
-      animation: spin 4s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(212,175,55,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 20% 80%, rgba(192,57,43,0.07) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 50% at 90% 10%, rgba(93,173,226,0.05) 0%, transparent 50%),
+      var(--black);
+  }
 
-    .avatar-inner {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: var(--bg2);
-      border: 3px solid var(--bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.6rem;
-      overflow: hidden;
-    }
-    /* SVG circuit avatar */
-    .avatar-svg { width: 64px; height: 64px; }
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image:
+      linear-gradient(var(--gold) 1px, transparent 1px),
+      linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
 
-    /* uploaded photo fills the inner circle */
-    .avatar-inner img.avatar-photo {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-      position: absolute;
-      inset: 0;
-    }
+  /* Floating orbs */
+  .orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); pointer-events: none;
+    animation: floatOrb 8s ease-in-out infinite;
+  }
+  .orb-1 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(212,175,55,0.12), transparent 70%);
+    top: 10%; right: 10%;
+    animation-delay: 0s;
+  }
+  .orb-2 {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(192,57,43,0.1), transparent 70%);
+    bottom: 20%; left: 5%;
+    animation-delay: -3s;
+  }
+  .orb-3 {
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(93,173,226,0.08), transparent 70%);
+    top: 60%; right: 30%;
+    animation-delay: -5s;
+  }
+  @keyframes floatOrb {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
 
-    /* ── UPLOAD BUTTON ── */
-    .upload-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      margin-bottom: 18px;
-      padding: 7px 16px;
-      border-radius: 20px;
-      border: 1px dashed rgba(0,210,180,0.35);
-      background: transparent;
-      color: var(--muted);
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-    }
-    .upload-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(0,210,180,0.06);
-    }
-    .upload-btn svg { flex-shrink: 0; transition: transform 0.2s; }
-    .upload-btn:hover svg { transform: translateY(-1px); }
-    #photoInput { display: none; }
+  .hero-content {
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+    max-width: 1200px; width: 100%;
+  }
 
-    .handle {
-      font-family: 'Space Mono', monospace;
-      font-size: 1.05rem;
-      color: var(--accent);
-      letter-spacing: 0.06em;
-      margin-bottom: 8px;
-    }
-    .handle span { color: var(--muted); }
+  .hero-text { }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(212,175,55,0.1);
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 2px;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); font-weight: 500;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+  }
+  .badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2s ease infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
 
-    .bio {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.9rem;
-      color: #8ea5b0;
-      line-height: 1.7;
-      max-width: 400px;
-      margin: 0 auto;
-    }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 900; line-height: 1;
+    margin-bottom: 0.3rem;
+    animation: fadeUp 0.8s 0.15s ease forwards; opacity: 0;
+  }
+  .hero-name span {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 40%, var(--gold) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-handle {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    letter-spacing: 5px; color: var(--sky);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s 0.25s ease forwards; opacity: 0;
+  }
+  .hero-bio {
+    font-size: 1rem; line-height: 1.8;
+    color: rgba(248,244,237,0.65);
+    max-width: 480px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s 0.35s ease forwards; opacity: 0;
+  }
+  .hero-stats {
+    display: flex; gap: 2rem; margin-bottom: 2.5rem;
+    animation: fadeUp 0.8s 0.45s ease forwards; opacity: 0;
+  }
+  .stat { }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem; color: var(--gold); line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-muted); margin-top: 2px;
+  }
+  .stat-divider {
+    width: 1px; background: rgba(212,175,55,0.2); align-self: stretch;
+  }
 
-    /* ── STATUS TICKER ── */
-    .ticker-wrap {
-      width: 100%;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: var(--surface);
-      margin-bottom: 36px;
-      padding: 8px 0;
-      animation: fadeUp 0.7s 0.15s ease both;
-    }
-    .ticker {
-      display: flex;
-      gap: 60px;
-      white-space: nowrap;
-      animation: ticker 18s linear infinite;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--accent);
-      letter-spacing: 0.08em;
-    }
-    .ticker span { display: inline-flex; align-items: center; gap: 8px; }
-    .ticker span::before { content: '◈'; font-size: 0.6rem; color: var(--accent3); }
-    @keyframes ticker {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.55s ease forwards; opacity: 0;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--black); font-weight: 700;
+    padding: 0.9rem 2rem; border-radius: 2px;
+    text-decoration: none; font-size: 0.9rem;
+    letter-spacing: 1px; text-transform: uppercase;
+    transition: all 0.3s; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(212,175,55,0.4);
+  }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: transparent;
+    border: 1px solid rgba(212,175,55,0.4);
+    color: var(--gold); font-weight: 600;
+    padding: 0.9rem 2rem; border-radius: 2px;
+    text-decoration: none; font-size: 0.9rem;
+    letter-spacing: 1px; text-transform: uppercase;
+    transition: all 0.3s; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-secondary:hover {
+    background: rgba(212,175,55,0.1);
+    transform: translateY(-2px);
+  }
 
-    /* ── SECTION LABEL ── */
-    .section-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 14px;
-      align-self: flex-start;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .section-label::before { content: ''; display: block; width: 20px; height: 1px; background: var(--muted); }
-    .section-label::after  { content: ''; display: block; flex: 1; height: 1px; background: var(--border); }
+  /* Profile Image */
+  .hero-visual {
+    position: relative; display: flex;
+    justify-content: center; align-items: center;
+    animation: fadeUp 0.8s 0.3s ease forwards; opacity: 0;
+  }
+  .profile-frame {
+    position: relative; width: 360px; height: 440px;
+  }
+  .profile-border {
+    position: absolute; inset: -3px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, var(--gold), var(--red), var(--sky), var(--gold));
+    background-size: 300% 300%;
+    animation: gradientShift 4s ease infinite;
+    z-index: 0;
+  }
+  @keyframes gradientShift {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  .profile-img-wrap {
+    position: relative; z-index: 1;
+    width: 100%; height: 100%;
+    border-radius: 3px; overflow: hidden;
+    background: transparent;
+  }
+  .profile-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s ease;
+    display: block;
+  }
+  .profile-img-wrap:hover img { transform: scale(1.04); }
 
-    /* ── LINKS ── */
-    .links-block {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      margin-bottom: 48px;
-    }
+  /* Floating badge on image */
+  .floating-tag {
+    position: absolute;
+    background: var(--dark2);
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 3px;
+    padding: 0.6rem 1rem;
+    z-index: 5;
+    backdrop-filter: blur(10px);
+  }
+  .floating-tag.tag-1 {
+    bottom: -1rem; left: -2rem;
+    animation: floatTag 4s ease-in-out infinite;
+  }
+  .floating-tag.tag-2 {
+    top: 1rem; right: -2rem;
+    animation: floatTag 4s ease-in-out infinite;
+    animation-delay: -2s;
+  }
+  @keyframes floatTag {
+    0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)}
+  }
+  .tag-label {
+    font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-muted); display: block; margin-bottom: 2px;
+  }
+  .tag-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem; color: var(--gold); letter-spacing: 2px;
+  }
 
-    .link-btn {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 16px 22px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      text-decoration: none;
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-      letter-spacing: 0.04em;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
-      animation: fadeUp 0.7s ease both;
-    }
-    .link-btn:nth-child(1) { animation-delay: 0.25s; }
-    .link-btn:nth-child(2) { animation-delay: 0.35s; }
+  /* Decorative lines */
+  .deco-line {
+    position: absolute; background: linear-gradient(to right, transparent, var(--gold), transparent);
+    height: 1px; width: 200px; opacity: 0.3;
+  }
+  .deco-line-v {
+    position: absolute; background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    width: 1px; height: 150px; opacity: 0.2;
+  }
 
-    .link-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, transparent 0%, rgba(0,210,180,0.07) 50%, transparent 100%);
-      transform: translateX(-100%);
-      transition: transform 0.4s ease;
-    }
-    .link-btn:hover::before { transform: translateX(100%); }
-    .link-btn:hover {
-      border-color: var(--accent);
-      box-shadow: var(--glow);
-      transform: translateY(-2px);
-    }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-    .link-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-size: 1.2rem;
-    }
-    .link-icon.tg  { background: rgba(0,172,238,0.13); border: 1px solid rgba(0,172,238,0.2); }
-    .link-icon.ig  { background: rgba(228,64,95,0.13); border: 1px solid rgba(228,64,95,0.2); }
+  /* SECTION STYLES */
+  section { padding: 6rem 2rem; position: relative; }
+  .container { max-width: 1200px; margin: 0 auto; }
 
-    .link-text { flex: 1; }
-    .link-name { display: block; font-size: 0.95rem; }
-    .link-sub  { display: block; font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em; margin-top: 2px; }
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); font-weight: 600;
+    margin-bottom: 0.8rem; display: block;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 900; line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  .section-title span { color: var(--gold); }
+  .section-line {
+    width: 60px; height: 3px;
+    background: linear-gradient(to right, var(--gold), var(--red));
+    border-radius: 2px; margin-bottom: 2rem;
+  }
 
-    .link-arrow {
-      font-size: 0.85rem;
-      color: var(--muted);
-      transition: color 0.2s, transform 0.2s;
-    }
-    .link-btn:hover .link-arrow { color: var(--accent); transform: translateX(4px); }
+  /* ABOUT SECTION */
+  .about { background: var(--dark); }
+  .about-inner {
+    display: grid; grid-template-columns: 1fr 1.3fr;
+    gap: 5rem; align-items: center;
+  }
+  .about-visual { position: relative; }
+  .about-img-stack {
+    position: relative; height: 460px;
+  }
+  .about-img-main {
+    position: absolute; right: 0; top: 0;
+    width: 280px; height: 360px;
+    border-radius: 3px; overflow: hidden;
+    border: 2px solid rgba(212,175,55,0.2);
+  }
+  .about-img-main img { width: 100%; height: 100%; object-fit: cover; }
+  .about-accent-box {
+    position: absolute; left: 0; bottom: 0;
+    width: 200px; height: 200px;
+    background: linear-gradient(135deg, var(--red) 0%, var(--gold-dark) 100%);
+    border-radius: 3px; z-index: 0;
+    opacity: 0.7;
+  }
+  .about-quote-box {
+    position: absolute; left: 10px; top: 50%;
+    transform: translateY(-50%);
+    background: var(--dark2); border: 1px solid rgba(212,175,55,0.25);
+    border-radius: 3px; padding: 1.5rem; width: 200px;
+    z-index: 3;
+    backdrop-filter: blur(10px);
+  }
+  .about-quote-box p {
+    font-style: italic; font-size: 0.88rem;
+    color: var(--white); line-height: 1.6;
+    margin-bottom: 0.8rem;
+  }
+  .about-quote-box span {
+    font-size: 0.72rem; color: var(--gold); letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .about-text h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; margin-bottom: 1rem; color: var(--gold-light);
+  }
+  .about-text p {
+    color: rgba(248,244,237,0.65); line-height: 1.8;
+    margin-bottom: 1.2rem; font-size: 0.95rem;
+  }
+  .about-features {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem;
+  }
+  .about-feature {
+    display: flex; align-items: flex-start; gap: 0.8rem;
+    padding: 1rem; background: rgba(212,175,55,0.04);
+    border: 1px solid rgba(212,175,55,0.1); border-radius: 3px;
+  }
+  .feature-icon {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+    color: var(--black);
+  }
+  .feature-text strong {
+    display: block; font-size: 0.85rem; margin-bottom: 2px; color: var(--white);
+  }
+  .feature-text span { font-size: 0.78rem; color: var(--text-muted); }
 
-    /* ── GALLERY ── */
-    .gallery-grid {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 48px;
-    }
+  /* COURSES SECTION */
+  .courses { background: var(--black); }
+  .courses-header {
+    text-align: center; max-width: 600px; margin: 0 auto 4rem;
+  }
+  .courses-header .section-line { margin: 0 auto 2rem; }
+  .courses-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .course-card {
+    background: var(--dark);
+    border: 1px solid rgba(212,175,55,0.1);
+    border-radius: 4px; overflow: hidden;
+    transition: all 0.4s ease; position: relative;
+  }
+  .course-card:hover {
+    border-color: rgba(212,175,55,0.4);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(212,175,55,0.1);
+  }
+  .course-card.featured {
+    border-color: rgba(212,175,55,0.4);
+    background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, var(--dark) 60%);
+  }
+  .course-card.featured::before {
+    content: 'MOST POPULAR';
+    position: absolute; top: 1rem; right: -2rem;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--black); font-size: 0.62rem;
+    font-weight: 700; letter-spacing: 2px;
+    padding: 0.3rem 2.5rem; transform: rotate(45deg);
+    transform-origin: center;
+    right: -0.8rem; top: 1.5rem;
+  }
+  .course-thumb {
+    height: 180px; position: relative; overflow: hidden;
+    background: var(--dark2);
+  }
+  .course-thumb-bg {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+    position: relative;
+  }
+  .course-thumb-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: inherit;
+    opacity: 0.15;
+  }
+  .ct-1 { background: linear-gradient(135deg, #1a0a00, #3d1a00); }
+  .ct-2 { background: linear-gradient(135deg, #0a0010, #200030); }
+  .ct-3 { background: linear-gradient(135deg, #001020, #002040); }
+  .course-badge {
+    position: absolute; top: 1rem; left: 1rem;
+    background: rgba(212,175,55,0.9); color: var(--black);
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 2px;
+    padding: 0.25rem 0.7rem; border-radius: 2px;
+    text-transform: uppercase;
+  }
+  .course-body { padding: 1.5rem; }
+  .course-level {
+    font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--sky); margin-bottom: 0.5rem; display: block;
+  }
+  .course-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700;
+    margin-bottom: 0.6rem; line-height: 1.3;
+  }
+  .course-desc {
+    font-size: 0.82rem; color: rgba(248,244,237,0.6);
+    line-height: 1.6; margin-bottom: 1.2rem;
+  }
+  .course-meta {
+    display: flex; gap: 1rem; margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .course-meta span {
+    font-size: 0.75rem; color: var(--text-muted);
+    display: flex; align-items: center; gap: 0.3rem;
+  }
+  .course-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(212,175,55,0.1);
+  }
+  .course-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; color: var(--gold);
+  }
+  .course-price small {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem; color: var(--text-muted);
+    display: block; letter-spacing: 1px;
+    text-decoration: line-through;
+  }
+  .btn-enroll {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--black); font-weight: 700;
+    padding: 0.6rem 1.4rem; border-radius: 2px;
+    text-decoration: none; font-size: 0.82rem;
+    letter-spacing: 1px; text-transform: uppercase;
+    transition: all 0.3s; display: inline-block; cursor: pointer;
+    border: none; font-family: 'DM Sans', sans-serif;
+  }
+  .btn-enroll:hover { transform: scale(1.05); box-shadow: 0 5px 20px rgba(212,175,55,0.4); }
 
-    .card {
-      aspect-ratio: 1;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 16px;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
-      animation: fadeUp 0.7s ease both;
-    }
-    .card:hover {
-      border-color: var(--accent);
-      box-shadow: var(--glow);
-      transform: translateY(-4px) scale(1.02);
-    }
-    .card:nth-child(1) { animation-delay: 0.3s; }
-    .card:nth-child(2) { animation-delay: 0.38s; }
-    .card:nth-child(3) { animation-delay: 0.46s; }
-    .card:nth-child(4) { animation-delay: 0.54s; }
-    .card:nth-child(5) { animation-delay: 0.62s; }
-    .card:nth-child(6) { animation-delay: 0.7s; }
+  /* TESTIMONIALS */
+  .testimonials { background: var(--dark); overflow: hidden; }
+  .testi-header { text-align: center; margin-bottom: 3rem; }
+  .testi-header .section-line { margin: 0 auto 2rem; }
+  .testi-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  .testi-card {
+    background: var(--dark2); border: 1px solid rgba(212,175,55,0.1);
+    border-radius: 4px; padding: 2rem; position: relative;
+    transition: all 0.3s;
+  }
+  .testi-card:hover {
+    border-color: rgba(212,175,55,0.3);
+    transform: translateY(-4px);
+  }
+  .quote-icon {
+    font-size: 4rem; color: var(--gold); opacity: 0.15;
+    font-family: Georgia, serif; line-height: 1;
+    position: absolute; top: 0.5rem; left: 1.5rem;
+  }
+  .testi-text {
+    font-size: 0.92rem; line-height: 1.7;
+    color: rgba(248,244,237,0.75); margin-bottom: 1.5rem;
+    position: relative; z-index: 1;
+  }
+  .testi-author { display: flex; align-items: center; gap: 1rem; }
+  .testi-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--red));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 1rem; color: var(--black); flex-shrink: 0;
+  }
+  .testi-info strong { display: block; font-size: 0.88rem; color: var(--white); }
+  .testi-info span { font-size: 0.75rem; color: var(--gold); }
+  .stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 0.8rem; }
 
-    .card-bg {
-      position: absolute;
-      inset: 0;
-      opacity: 0.07;
-      background-size: cover;
-      transition: opacity 0.3s;
-    }
-    .card:hover .card-bg { opacity: 0.14; }
+  /* WHY SECTION */
+  .why { background: var(--black); }
+  .why-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .why-card {
+    padding: 2rem; border: 1px solid rgba(212,175,55,0.1);
+    border-radius: 4px; background: var(--dark);
+    text-align: center; transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .why-card::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--gold), var(--red));
+    transform: scaleX(0); transition: transform 0.3s;
+    transform-origin: left;
+  }
+  .why-card:hover::before { transform: scaleX(1); }
+  .why-card:hover { border-color: rgba(212,175,55,0.3); transform: translateY(-4px); }
+  .why-icon {
+    width: 60px; height: 60px; border-radius: 50%;
+    margin: 0 auto 1.2rem;
+    display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+  }
+  .wi-1 { background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.05)); }
+  .wi-2 { background: linear-gradient(135deg, rgba(192,57,43,0.15), rgba(192,57,43,0.05)); }
+  .wi-3 { background: linear-gradient(135deg, rgba(93,173,226,0.15), rgba(93,173,226,0.05)); }
+  .wi-4 { background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(93,173,226,0.05)); }
+  .why-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; margin-bottom: 0.6rem; font-weight: 700;
+  }
+  .why-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
 
-    .card-icon {
-      font-size: 1.8rem;
-      position: relative;
-      z-index: 1;
-      filter: drop-shadow(0 0 8px currentColor);
-    }
-    .card-tag {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      text-transform: uppercase;
-      position: relative;
-      z-index: 1;
-      text-align: center;
-    }
+  /* SOCIAL SECTION */
+  .social-section {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+    text-align: center; padding: 5rem 2rem;
+  }
+  .social-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 0.5rem;
+  }
+  .social-section p {
+    color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1rem;
+  }
+  .social-links {
+    display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .social-btn {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    padding: 1rem 2rem; border-radius: 3px;
+    text-decoration: none; font-weight: 600;
+    font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;
+    transition: all 0.3s; border: 2px solid transparent;
+  }
+  .social-btn.instagram {
+    background: linear-gradient(135deg, #E1306C, #C13584, #833AB4);
+    color: white;
+  }
+  .social-btn.instagram:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(225,48,108,0.4); }
+  .social-btn.telegram {
+    background: #0088cc; color: white;
+  }
+  .social-btn.telegram:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,136,204,0.4); }
+  .social-icon { font-size: 1.3rem; }
 
-    /* card accent strips */
-    .card::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      border-radius: 12px 12px 0 0;
-      background: linear-gradient(90deg, transparent, var(--c, var(--accent)), transparent);
-      opacity: 0.6;
-    }
-    .card.c1 { --c: #00d2b4; }
-    .card.c2 { --c: #0af; }
-    .card.c3 { --c: #7c6aff; }
-    .card.c4 { --c: #ff6a9b; }
-    .card.c5 { --c: #ffaa44; }
-    .card.c6 { --c: #00d2b4; }
+  /* CONTACT */
+  .contact { background: var(--black); }
+  .contact-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+  }
+  .contact-info h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem;
+  }
+  .contact-info p { color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem; }
+  .contact-items { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-item {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem; background: var(--dark);
+    border: 1px solid rgba(212,175,55,0.1); border-radius: 3px;
+    transition: border-color 0.3s;
+  }
+  .contact-item:hover { border-color: rgba(212,175,55,0.3); }
+  .contact-item-icon {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(212,175,55,0.05));
+    display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
+  }
+  .contact-item strong { display: block; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2px; }
+  .contact-item span { font-size: 0.9rem; color: var(--white); }
 
-    /* ── STATS ROW ── */
-    .stats-row {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 48px;
-    }
-    .stat {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 18px 12px;
-      text-align: center;
-      animation: fadeUp 0.7s 0.5s ease both;
-    }
-    .stat-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--accent);
-      display: block;
-      letter-spacing: -0.02em;
-    }
-    .stat-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-top: 4px;
-      display: block;
-    }
+  .contact-form { }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label {
+    display: block; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.5rem; font-weight: 500;
+  }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; background: var(--dark);
+    border: 1px solid rgba(212,175,55,0.2); border-radius: 2px;
+    padding: 0.85rem 1rem; color: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    outline: none; transition: border-color 0.3s;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: rgba(212,175,55,0.5);
+    box-shadow: 0 0 0 3px rgba(212,175,55,0.06);
+  }
+  .form-group textarea { min-height: 120px; resize: vertical; }
+  .form-group select option { background: var(--dark2); }
 
-    /* ── TERMINAL BIO BOX ── */
-    .terminal {
-      width: 100%;
-      background: #080e14;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px 22px;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.78rem;
-      line-height: 1.9;
-      color: #6fbf8a;
-      margin-bottom: 48px;
-      animation: fadeUp 0.7s 0.55s ease both;
-      position: relative;
-      overflow: hidden;
-    }
-    .terminal::before {
-      content: '● ● ●';
-      display: block;
-      color: var(--muted);
-      font-size: 0.6rem;
-      letter-spacing: 4px;
-      margin-bottom: 12px;
-    }
-    .terminal .prompt { color: var(--accent2); }
-    .terminal .cmd    { color: var(--text); }
-    .terminal .output { color: #8fbfa0; }
-    .terminal .hi     { color: var(--accent); }
-    .cursor {
-      display: inline-block;
-      width: 8px;
-      height: 1em;
-      background: var(--accent);
-      animation: blink 1s step-end infinite;
-      vertical-align: text-bottom;
-    }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  /* CTA STRIP */
+  .cta-strip {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-dark));
+    padding: 4rem 2rem; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-strip::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .cta-strip h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 4rem); color: var(--black);
+    letter-spacing: 4px; margin-bottom: 0.5rem; position: relative;
+  }
+  .cta-strip p { color: rgba(0,0,0,0.6); margin-bottom: 2rem; position: relative; font-size: 1rem; }
+  .cta-strip .btn-primary {
+    background: var(--black); color: var(--gold);
+    position: relative;
+  }
+  .cta-strip .btn-primary:hover { background: var(--dark2); box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
+  .cta-strip .btn-secondary {
+    border-color: rgba(0,0,0,0.3); color: var(--black);
+    position: relative;
+  }
+  .cta-strip .btn-secondary:hover { background: rgba(0,0,0,0.1); }
 
-    /* ── FOOTER ── */
-    .footer {
-      text-align: center;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      animation: fadeUp 0.7s 0.65s ease both;
-    }
-    .footer a { color: var(--accent); text-decoration: none; }
-    .footer span { display: block; margin-top: 6px; opacity: 0.5; }
+  /* FOOTER */
+  footer {
+    background: var(--dark); padding: 4rem 2rem 2rem;
+    border-top: 1px solid rgba(212,175,55,0.1);
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem; margin-bottom: 3rem;
+  }
+  .footer-brand .nav-logo { display: inline-block; margin-bottom: 1rem; font-size: 2rem; }
+  .footer-brand p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; max-width: 280px; }
+  .footer-col h5 {
+    font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer-col ul a {
+    color: var(--text-muted); text-decoration: none; font-size: 0.85rem;
+    transition: color 0.3s;
+  }
+  .footer-col ul a:hover { color: var(--white); }
+  .footer-bottom {
+    padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: gap 1rem;
+  }
+  .footer-bottom p { font-size: 0.8rem; color: var(--text-muted); }
+  .footer-bottom span { color: var(--red); }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(22px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+  /* SCROLL INDICATOR */
+  .scroll-progress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(to right, var(--gold), var(--red), var(--sky));
+    z-index: 9999; transition: width 0.1s;
+  }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 480px) {
-      .wrapper { padding: 44px 16px 60px; }
-      .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-      .stats-row { gap: 8px; }
-      .stat-num { font-size: 1.2rem; }
-    }
-  </style>
+  /* REVEAL ANIMATION */
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .courses-grid { grid-template-columns: repeat(2, 1fr); }
+    .why-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.2rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero-content { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+    .hero-visual { order: -1; }
+    .profile-frame { width: 280px; height: 340px; margin: 0 auto; }
+    .hero-bio { max-width: 100%; }
+    .hero-stats { justify-content: center; }
+    .hero-ctas { justify-content: center; }
+    .floating-tag.tag-1 { left: 0; bottom: -1.5rem; }
+    .floating-tag.tag-2 { right: 0; top: 0.5rem; }
+    .about-inner { grid-template-columns: 1fr; }
+    .about-img-stack { height: 280px; }
+    .about-img-main { width: 200px; height: 260px; }
+    .about-features { grid-template-columns: 1fr; }
+    .courses-grid { grid-template-columns: 1fr; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr 1fr; }
+    .contact-inner { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .why-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.2rem; }
+    section { padding: 4rem 1.2rem; }
+    .btn-primary, .btn-secondary { padding: 0.8rem 1.4rem; font-size: 0.8rem; }
+  }
+  @media (hover: none) { .cursor, .cursor-ring { display: none; } body { cursor: auto; } }
+</style>
 </head>
 <body>
 
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="blob blob-3"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="scroll-progress" id="scrollProgress"></div>
 
-  <div class="wrapper">
-
-    <!-- ── HEADER ── -->
-    <header class="header">
-      <!-- Upload trigger -->
-      <input type="file" id="photoInput" accept="image/*">
-      <button class="upload-btn" onclick="document.getElementById('photoInput').click()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
-        </svg>
-        UPLOAD PHOTO
-      </button>
-
-      <div class="avatar-wrap">
-        <div class="avatar-ring"></div>
-        <div class="avatar-inner" id="avatarInner">
-          <svg class="avatar-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="32" cy="32" r="28" fill="#0d1318" stroke="#00d2b4" stroke-width="1.5"/>
-            <!-- circuit paths -->
-            <line x1="12" y1="32" x2="22" y2="32" stroke="#00d2b4" stroke-width="1.2"/>
-            <line x1="42" y1="32" x2="52" y2="32" stroke="#00d2b4" stroke-width="1.2"/>
-            <line x1="32" y1="12" x2="32" y2="22" stroke="#0af" stroke-width="1.2"/>
-            <line x1="32" y1="42" x2="32" y2="52" stroke="#0af" stroke-width="1.2"/>
-            <line x1="18" y1="18" x2="24" y2="24" stroke="#7c6aff" stroke-width="1"/>
-            <line x1="46" y1="18" x2="40" y2="24" stroke="#7c6aff" stroke-width="1"/>
-            <line x1="18" y1="46" x2="24" y2="40" stroke="#7c6aff" stroke-width="1"/>
-            <line x1="46" y1="46" x2="40" y2="40" stroke="#7c6aff" stroke-width="1"/>
-            <!-- center chip -->
-            <rect x="22" y="22" width="20" height="20" rx="3" fill="#111820" stroke="#00d2b4" stroke-width="1.5"/>
-            <rect x="26" y="26" width="12" height="12" rx="2" fill="#00d2b4" opacity="0.2"/>
-            <!-- dots on chip edges -->
-            <rect x="20" y="28" width="3" height="2" rx="0.5" fill="#00d2b4"/>
-            <rect x="20" y="34" width="3" height="2" rx="0.5" fill="#00d2b4"/>
-            <rect x="41" y="28" width="3" height="2" rx="0.5" fill="#00d2b4"/>
-            <rect x="41" y="34" width="3" height="2" rx="0.5" fill="#00d2b4"/>
-            <rect x="28" y="20" width="2" height="3" rx="0.5" fill="#0af"/>
-            <rect x="34" y="20" width="2" height="3" rx="0.5" fill="#0af"/>
-            <rect x="28" y="41" width="2" height="3" rx="0.5" fill="#0af"/>
-            <rect x="34" y="41" width="2" height="3" rx="0.5" fill="#0af"/>
-            <!-- inner glow circle -->
-            <circle cx="32" cy="32" r="4" fill="#00d2b4" opacity="0.7"/>
-          </svg>
-        </div>
-      </div>
-      <p class="handle"><span>@</span>abhitalkshere</p>
-      <p class="bio">Blending advanced AI capabilities with timeless digital aesthetics.<br>Transforming emerging tech into visual storytelling.</p>
-    </header>
-
-    <!-- ── TICKER ── -->
-    <div class="ticker-wrap">
-      <div class="ticker">
-        <span>AI &amp; TECH</span>
-        <span>VISUAL STORYTELLING</span>
-        <span>DIGITAL AESTHETICS</span>
-        <span>EMERGING TECH</span>
-        <span>NEURAL NETWORKS</span>
-        <span>GENERATIVE AI</span>
-        <span>FUTURE FORWARD</span>
-        <!-- duplicate for seamless loop -->
-        <span>AI &amp; TECH</span>
-        <span>VISUAL STORYTELLING</span>
-        <span>DIGITAL AESTHETICS</span>
-        <span>EMERGING TECH</span>
-        <span>NEURAL NETWORKS</span>
-        <span>GENERATIVE AI</span>
-        <span>FUTURE FORWARD</span>
-      </div>
-    </div>
-
-    <!-- ── LINKS ── -->
-    <div class="section-label" style="width:100%">Connect</div>
-    <div class="links-block">
-
-      <a href="https://t.me/abhitalkshere" target="_blank" rel="noopener" class="link-btn">
-        <div class="link-icon tg">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path d="M21.94 4.28L18.6 19.27c-.24 1.06-.87 1.33-1.76.83l-4.87-3.59-2.35 2.26c-.26.26-.48.48-.98.48l.35-4.95 9-8.13c.39-.35-.08-.54-.6-.19L5.14 14.63.37 13.16c-1.05-.33-1.07-1.04.22-1.55L20.66 2.97c.87-.31 1.63.21 1.28 1.31z" fill="#0af"/>
-          </svg>
-        </div>
-        <div class="link-text">
-          <span class="link-name">Telegram Channel</span>
-          <span class="link-sub">t.me/abhitalkshere</span>
-        </div>
-        <span class="link-arrow">→</span>
-      </a>
-
-      <a href="https://www.instagram.com/abhitalkshere?igsh=MWtydjlsYTdxMzY1Yw==" target="_blank" rel="noopener" class="link-btn">
-        <div class="link-icon ig">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="url(#ig)" stroke-width="2"/>
-            <circle cx="12" cy="12" r="4.5" stroke="url(#ig)" stroke-width="2"/>
-            <circle cx="17.5" cy="6.5" r="1" fill="#ff6a9b"/>
-            <defs>
-              <linearGradient id="ig" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#f5a623"/>
-                <stop offset="50%" stop-color="#e4405f"/>
-                <stop offset="100%" stop-color="#833ab4"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-        <div class="link-text">
-          <span class="link-name">Instagram</span>
-          <span class="link-sub">@abhitalkshere</span>
-        </div>
-        <span class="link-arrow">→</span>
-      </a>
-
-    </div>
-
-    <!-- ── GALLERY ── -->
-    <div class="section-label" style="width:100%">Featured Content</div>
-    <div class="gallery-grid">
-
-      <div class="card c1">
-        <div class="card-icon" style="color:#00d2b4">🤖</div>
-        <span class="card-tag">AI Models</span>
-      </div>
-
-      <div class="card c2">
-        <div class="card-icon" style="color:#0af">🧠</div>
-        <span class="card-tag">Neural Nets</span>
-      </div>
-
-      <div class="card c3">
-        <div class="card-icon" style="color:#7c6aff">⚡</div>
-        <span class="card-tag">Tech Trends</span>
-      </div>
-
-      <div class="card c4">
-        <div class="card-icon" style="color:#ff6a9b">✦</div>
-        <span class="card-tag">Gen AI Art</span>
-      </div>
-
-      <div class="card c5">
-        <div class="card-icon" style="color:#ffaa44">📡</div>
-        <span class="card-tag">Deep Dives</span>
-      </div>
-
-      <div class="card c6">
-        <div class="card-icon" style="color:#00d2b4">◈</div>
-        <span class="card-tag">Futures</span>
-      </div>
-
-    </div>
-
-    <!-- ── STATS ── -->
-    <div class="stats-row">
-      <div class="stat">
-        <span class="stat-num">AI</span>
-        <span class="stat-label">Powered</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">24/7</span>
-        <span class="stat-label">Live Feed</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">∞</span>
-        <span class="stat-label">Curiosity</span>
-      </div>
-    </div>
-
-    <!-- ── TERMINAL ── -->
-    <div class="section-label" style="width:100%">About</div>
-    <div class="terminal">
-      <div><span class="prompt">user@abhitalkshere</span><span class="cmd"> ~ $ whoami</span></div>
-      <div class="output">→ <span class="hi">abhitalkshere</span> // AI &amp; Tech Communicator</div>
-      <div><span class="prompt">user@abhitalkshere</span><span class="cmd"> ~ $ cat mission.txt</span></div>
-      <div class="output">→ Bridging the gap between <span class="hi">cutting-edge AI</span></div>
-      <div class="output">&nbsp;&nbsp; and everyday digital culture.</div>
-      <div><span class="prompt">user@abhitalkshere</span><span class="cmd"> ~ $ ls topics/</span></div>
-      <div class="output">→ <span class="hi">LLMs</span> &nbsp;<span class="hi">GenAI</span> &nbsp;<span class="hi">Vision</span> &nbsp;<span class="hi">Automation</span> &nbsp;<span class="hi">Future</span></div>
-      <div><span class="prompt">user@abhitalkshere</span><span class="cmd"> ~ $ _</span><span class="cursor"></span></div>
-    </div>
-
-    <!-- ── FOOTER ── -->
-    <footer class="footer">
-      <div>
-        <a href="https://t.me/abhitalkshere" target="_blank">Telegram</a>
-        &nbsp;·&nbsp;
-        <a href="https://www.instagram.com/abhitalkshere?igsh=MWtydjlsYTdxMzY1Yw==" target="_blank">Instagram</a>
-      </div>
-      <span>© 2025 abhitalkshere — crafted with ✦ &amp; circuits</span>
-    </footer>
-
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">ABHI</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#courses">Courses</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#courses" class="nav-cta">Enroll Now</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
   </div>
+</nav>
 
-  <script>
-    const input = document.getElementById('photoInput');
-    const inner = document.getElementById('avatarInner');
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="#about" class="mm-link">About</a>
+  <a href="#courses" class="mm-link">Courses</a>
+  <a href="#testimonials" class="mm-link">Reviews</a>
+  <a href="#contact" class="mm-link">Contact</a>
+</div>
 
-    input.addEventListener('change', function () {
-      const file = this.files[0];
-      if (!file || !file.type.startsWith('image/')) return;
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
 
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        inner.innerHTML = '';
-        const img = document.createElement('img');
-        img.src = e.target.result;
-        img.className = 'avatar-photo';
-        img.alt = 'Profile photo';
-        inner.appendChild(img);
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Digital Creator & AI Educator
+      </div>
+      <h1 class="hero-name"><span>Abhi</span><br>Talks Here</h1>
+      <p class="hero-handle">@abhitalkshere</p>
+      <p class="hero-bio">I'm a digital creator passionate about producing engaging content that entertains, informs, and inspires. Through videos, photos, and stories, I help my audience discover new perspectives and stay connected with the latest trends.</p>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">10K+</div>
+          <div class="stat-label">Followers</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <div class="stat-num">500+</div>
+          <div class="stat-label">Students</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <div class="stat-num">3</div>
+          <div class="stat-label">AI Courses</div>
+        </div>
+      </div>
+      <div class="hero-ctas">
+        <a href="#courses" class="btn-primary">⚡ Explore Courses</a>
+        <a href="#about" class="btn-secondary">Learn More →</a>
+      </div>
+    </div>
 
-        const btn = document.querySelector('.upload-btn');
-        btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> CHANGE PHOTO';
-      };
-      reader.readAsDataURL(file);
+    <div class="hero-visual">
+      <div class="profile-frame">
+        <div class="profile-border"></div>
+        <div class="profile-img-wrap">
+          <img src="https://ui-avatars.com/api/?name=AT&background=0A0A0A&color=D4AF37&size=400&bold=true&font-size=0.35" alt="Abhi Talks Here" id="profileImg">
+        </div>
+        <div class="floating-tag tag-1">
+          <span class="tag-label">Status</span>
+          <span class="tag-value">🔴 Live</span>
+        </div>
+        <div class="floating-tag tag-2">
+          <span class="tag-label">Content Creator</span>
+          <span class="tag-value">AI Expert</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-visual reveal">
+        <div class="about-img-stack">
+          <div class="about-accent-box"></div>
+          <div class="about-img-main">
+            <img src="https://ui-avatars.com/api/?name=Abhi&background=1a1a1a&color=D4AF37&size=300&bold=true&font-size=0.5" alt="Abhi">
+          </div>
+          <div class="about-quote-box">
+            <p>"My mission is to make AI accessible to everyone."</p>
+            <span>— Abhi</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-text reveal">
+        <span class="section-label">About Me</span>
+        <h2 class="section-title">I Create Content<br>That <span>Changes</span> Lives</h2>
+        <div class="section-line"></div>
+        <h3>Creator. Educator. Innovator.</h3>
+        <p>Behind every post, every reel, every story is a genuine desire to connect and inspire. I've spent years studying digital content creation and artificial intelligence to bring you the most relevant, actionable knowledge in today's fast-moving digital world.</p>
+        <p>My AI courses have helped hundreds of students land better jobs, build their own businesses, and navigate the future of technology with confidence. I break down complex concepts into simple, practical lessons you can apply immediately.</p>
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="feature-icon">🤖</div>
+            <div class="feature-text">
+              <strong>AI Specialist</strong>
+              <span>Practical AI education</span>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="feature-icon">📱</div>
+            <div class="feature-text">
+              <strong>Content Creator</strong>
+              <span>Engaging digital media</span>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="feature-icon">🎓</div>
+            <div class="feature-text">
+              <strong>Mentor</strong>
+              <span>500+ students guided</span>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="feature-icon">🌍</div>
+            <div class="feature-text">
+              <strong>Global Reach</strong>
+              <span>Worldwide community</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE ME -->
+<section class="why" id="why">
+  <div class="container">
+    <div style="text-align:center; max-width:550px; margin:0 auto 1rem;" class="reveal">
+      <span class="section-label">Why Choose Me</span>
+      <h2 class="section-title">What Makes My<br>Courses <span>Different</span></h2>
+      <div class="section-line" style="margin:0 auto 1rem;"></div>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-icon wi-1">🚀</div>
+        <h4>Beginner Friendly</h4>
+        <p>No prior experience needed. Every concept is explained from scratch with real-world examples.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon wi-2">🔥</div>
+        <h4>Practical Projects</h4>
+        <p>Build real AI projects from day one. Learn by doing, not just watching boring lectures.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon wi-3">💬</div>
+        <h4>Community Support</h4>
+        <p>Join our active Telegram group with direct access to me and fellow students.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon wi-4">♾️</div>
+        <h4>Lifetime Access</h4>
+        <p>Pay once, learn forever. All future updates included at no extra cost.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section class="courses" id="courses">
+  <div class="container">
+    <div class="courses-header reveal">
+      <span class="section-label">My Courses</span>
+      <h2 class="section-title">Master AI with<br><span>Expert-Led</span> Courses</h2>
+      <div class="section-line"></div>
+      <p style="color:var(--text-muted); font-size:0.95rem;">Practical, project-based AI courses designed for the modern learner. Start your AI journey today.</p>
+    </div>
+    <div class="courses-grid">
+      <!-- Course 1 -->
+      <div class="course-card reveal">
+        <div class="course-thumb">
+          <div class="course-thumb-bg ct-1">🤖</div>
+          <span class="course-badge">NEW</span>
+        </div>
+        <div class="course-body">
+          <span class="course-level">⭐ Beginner</span>
+          <h3 class="course-name">AI BASIC COURSE</h3>
+          <p class="course-desc">Your complete introduction to artificial intelligence. Learn how AI works, its applications, and how to use it in your daily life and career.</p>
+          <div class="course-meta">
+            <span>📚 24 Lessons</span>
+            <span>⏱ 8 Hours</span>
+            <span>📜 Certificate</span>
+          </div>
+          <div class="course-footer">
+            <div class="course-price">
+              <small>₹4,999</small>
+              ₹999
+            </div>
+            <a href="#contact" class="btn-enroll">Enroll</a>
+          </div>
+        </div>
+      </div>
+      <!-- Course 2 FEATURED -->
+      <div class="course-card featured reveal">
+        <div class="course-thumb">
+          <div class="course-thumb-bg ct-2">🧠</div>
+          <span class="course-badge">BESTSELLER</span>
+        </div>
+        <div class="course-body">
+          <span class="course-level">🔥 Intermediate</span>
+          <h3 class="course-name">ChatGPT & Prompt Engineering Pro</h3>
+          <p class="course-desc">Unlock the full power of ChatGPT and large language models. Master prompt engineering to 10x your productivity and build AI-powered workflows.</p>
+          <div class="course-meta">
+            <span>📚 36 Lessons</span>
+            <span>⏱ 12 Hours</span>
+            <span>📜 Certificate</span>
+          </div>
+          <div class="course-footer">
+            <div class="course-price">
+              <small>₹7,999</small>
+              ₹2,999
+            </div>
+            <a href="#contact" class="btn-enroll">Enroll</a>
+          </div>
+        </div>
+      </div>
+      <!-- Course 3 -->
+      <div class="course-card reveal">
+        <div class="course-thumb">
+          <div class="course-thumb-bg ct-3">💡</div>
+          <span class="course-badge">ADVANCED</span>
+        </div>
+        <div class="course-body">
+          <span class="course-level">🚀 Advanced</span>
+          <h3 class="course-name">AI Business Automation Blueprint</h3>
+          <p class="course-desc">Build automated AI systems for your business. From chatbots to content pipelines — learn to build tools that generate income on autopilot.</p>
+          <div class="course-meta">
+            <span>📚 48 Lessons</span>
+            <span>⏱ 18 Hours</span>
+            <span>📜 Certificate</span>
+          </div>
+          <div class="course-footer">
+            <div class="course-price">
+              <small>₹12,999</small>
+              ₹4,999
+            </div>
+            <a href="#contact" class="btn-enroll">Enroll</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="testi-header reveal">
+      <span class="section-label">Student Reviews</span>
+      <h2 class="section-title">What My <span>Students</span> Say</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="quote-icon">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">Abhi's AI course completely changed how I work. I've automated half of my daily tasks and now I have time to focus on growing my business. Best investment of 2024!</p>
+        <div class="testi-author">
+          <div class="testi-avatar">R</div>
+          <div class="testi-info">
+            <strong>Rahul Sharma</strong>
+            <span>Entrepreneur</span>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="quote-icon">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">I was completely new to AI. Abhi's teaching style is so clear and friendly. Within 2 weeks I was building my own AI tools. The Telegram community support is amazing!</p>
+        <div class="testi-author">
+          <div class="testi-avatar">P</div>
+          <div class="testi-info">
+            <strong>Priya Nair</strong>
+            <span>Freelancer</span>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="quote-icon">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="testi-text">The prompt engineering course alone helped me land a 40% raise at my job. My manager was blown away by my productivity. Thank you Abhi for this life-changing content!</p>
+        <div class="testi-author">
+          <div class="testi-avatar">A</div>
+          <div class="testi-info">
+            <strong>Arun Menon</strong>
+            <span>IT Professional</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL SECTION -->
+<div class="social-section reveal">
+  <div class="container">
+    <h2 class="section-title">Follow the <span>Journey</span></h2>
+    <p>Join thousands of followers getting daily AI tips, content creation hacks, and inspiration.</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/abhitalkshere?igsh=MWtydjlsYTdxMzY1Yw==" target="_blank" class="social-btn instagram">
+        <span class="social-icon">📸</span> Follow on Instagram
+      </a>
+      <a href="https://t.me/abhitalkshere" target="_blank" class="social-btn telegram">
+        <span class="social-icon">✈️</span> Join Telegram
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <h2>READY TO MASTER AI?</h2>
+  <p>Join 500+ students who've already transformed their careers with AI education</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="#courses" class="btn-primary">⚡ Start Learning Today</a>
+    <a href="#contact" class="btn-secondary">Talk to Me First</a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-info reveal">
+        <span class="section-label">Get In Touch</span>
+        <h2 class="section-title">Let's <span>Connect</span></h2>
+        <div class="section-line"></div>
+        <p>Have questions about my courses? Want to collaborate or just say hello? I'd love to hear from you. Reach out through any of the channels below.</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-item-icon">📧</div>
+            <div>
+              <strong>Email</strong>
+              <span>abhitalks678999@gmail.com</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📞</div>
+            <div>
+              <strong>Phone / WhatsApp</strong>
+              <span>+91 70658791</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">✈️</div>
+            <div>
+              <strong>Telegram</strong>
+              <span>@abhitalkshere</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📸</div>
+            <div>
+              <strong>Instagram</strong>
+              <span>@abhitalkshere</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal">
+        <span class="section-label">Send a Message</span>
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Interested In</label>
+          <select>
+            <option value="">Select a course or topic</option>
+            <option>AI Fundamentals Masterclass</option>
+            <option>ChatGPT & Prompt Engineering Pro</option>
+            <option>AI Business Automation Blueprint</option>
+            <option>Collaboration / Sponsorship</option>
+            <option>General Inquiry</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell me how I can help you..."></textarea>
+        </div>
+        <button class="btn-primary" style="width:100%;justify-content:center;" onclick="handleSubmit(this)">
+          🚀 Send Message
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">ABHI TALKS HERE</a>
+        <p>Digital creator and AI educator helping you master the future. Join the community and transform your career.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        <ul>
+          <li><a href="#about">About Me</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Courses</h5>
+        <ul>
+          <li><a href="#courses">AI Fundamentals</a></li>
+          <li><a href="#courses">Prompt Engineering</a></li>
+          <li><a href="#courses">AI Automation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Connect</h5>
+        <ul>
+          <li><a href="https://www.instagram.com/abhitalkshere" target="_blank">Instagram</a></li>
+          <li><a href="https://t.me/abhitalkshere" target="_blank">Telegram</a></li>
+          <li><a href="mailto:abhitalks678999@gmail.com">Email Me</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Abhi Talks Here. All rights reserved. Made with <span>♥</span></p>
+      <p style="color:var(--text-muted);font-size:0.78rem;">@abhitalkshere | Digital Creator & AI Educator</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Custom Cursor
+  const cursor = document.getElementById('cursor');
+  const cursorRing = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx-6}px, ${my-6}px)`;
+  });
+
+  function animateCursor() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    cursorRing.style.transform = `translate(${rx-18}px, ${ry-18}px)`;
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  document.querySelectorAll('a, button, .course-card, .testi-card, .why-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform += ' scale(1.5)';
+      cursorRing.style.transform += ' scale(1.5)';
+      cursorRing.style.borderColor = 'var(--red)';
     });
-  </script>
+    el.addEventListener('mouseleave', () => {
+      cursorRing.style.borderColor = 'var(--gold)';
+    });
+  });
+
+  // Scroll Progress
+  window.addEventListener('scroll', () => {
+    const prog = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    document.getElementById('scrollProgress').style.width = prog + '%';
+  });
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileClose = document.getElementById('mobileClose');
+
+  hamburger.addEventListener('click', () => mobileMenu.classList.add('active'));
+  mobileClose.addEventListener('click', () => mobileMenu.classList.remove('active'));
+  document.querySelectorAll('.mm-link').forEach(a => {
+    a.addEventListener('click', () => mobileMenu.classList.remove('active'));
+  });
+
+  // Reveal on Scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Try to load Google profile image
+  const profileImg = document.getElementById('profileImg');
+  const testImg = new Image();
+  testImg.onload = () => { profileImg.src = testImg.src; };
+  testImg.src = 'https://lh3.googleusercontent.com/a/YvtTzcU88fEbfFE2L';
+
+  // Form Submit
+  function handleSubmit(btn) {
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✅ Message Sent!';
+    btn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+    btn.style.color = 'white';
+    setTimeout(() => {
+      btn.innerHTML = orig;
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 3000);
+  }
+
+  // Smooth scroll for all anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
 </body>
 </html>
