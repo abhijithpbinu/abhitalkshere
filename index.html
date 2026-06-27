@@ -115,7 +115,7 @@ section{padding:100px 24px}
 /* PRICING CARD */
 .pricing-card{background:var(--s3);border:2px solid var(--gold);border-radius:16px;padding:36px;text-align:center;position:relative;overflow:hidden}
 .price-tag{position:absolute;top:16px;right:-28px;background:var(--red);color:white;font-size:0.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 40px;transform:rotate(45deg)}
-.price-val{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--gold);letter-spacing:2px;line-height:1}
+.price-orig{font-size:1.1rem;color:var(--muted);text-decoration:line-through;letter-spacing:1px;margin-bottom:4px}.price-badge{display:inline-block;background:var(--red);color:#fff;font-size:0.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:4px;margin-bottom:6px}.price-val{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--gold);letter-spacing:2px;line-height:1}
 .price-period{font-size:0.8rem;color:var(--muted);letter-spacing:1px;margin-bottom:24px}
 .price-features{list-style:none;text-align:left;display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
 .price-features li{display:flex;align-items:center;gap:10px;font-size:0.88rem;color:var(--muted)}
@@ -333,8 +333,8 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:48px 2
         <a href="https://www.instagram.com/abhitalkshere" target="_blank" class="btn-secondary">&#128247; Follow on Instagram</a>
       </div>
       <div class="hero-stats">
-        <div><div class="stat-val">10K+</div><div class="stat-label">Followers</div></div>
-        <div><div class="stat-val">50+</div><div class="stat-label">Videos</div></div>
+        <div><div class="stat-val">40K+</div><div class="stat-label">Followers</div></div>
+        <div><div class="stat-val">100+</div><div class="stat-label">Videos</div></div>
         <div><div class="stat-val">100%</div><div class="stat-label">Real Value</div></div>
       </div>
     </div>
@@ -408,9 +408,6 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:48px 2
         </div>
       </div>
       <div class="about-cards reveal">
-        <div class="acard"><div class="acard-num">50K+</div><div class="acard-label">Content Views</div></div>
-        <div class="acard"><div class="acard-num">3+</div><div class="acard-label">Years Creating</div></div>
-        <div class="acard"><div class="acard-num">500+</div><div class="acard-label">Students Taught</div></div>
       </div>
     </div>
   </div>
@@ -431,30 +428,31 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:48px 2
         <div class="course-grid">
           <div>
             <h3 class="course-title">Master <span>AI Tools</span> and Transform Your Digital Life</h3>
-            <p class="course-desc">This isn't a theory course. You'll use real AI tools from day one - building automations, generating content, and making money smarter. Whether you're a creator, freelancer, or complete beginner, this course meets you where you are.</p>
+            <p class="course-desc">This course is designed for complete beginners and people who know AI at a mid level. You don't need any technical knowledge, coding skills, or previous AI experience. I'll guide you step by step in simple language so you can start using AI confidently from day one.</p>
             <div class="curriculum">
-              <div class="curr-item"><span class="curr-num">01</span><span class="curr-text">Introduction to AI - What It Is and Why It Matters Now</span><span class="curr-check">*</span></div>
-              <div class="curr-item"><span class="curr-num">02</span><span class="curr-text">ChatGPT, Gemini and Claude - Master the Big Three</span><span class="curr-check">*</span></div>
-              <div class="curr-item"><span class="curr-num">03</span><span class="curr-text">AI for Content Creation - Videos, Reels and Scripts</span><span class="curr-check">*</span></div>
-              <div class="curr-item"><span class="curr-num">04</span><span class="curr-text">AI Image and Design Tools - Midjourney, DALL-E and More</span><span class="curr-check">*</span></div>
-              <div class="curr-item"><span class="curr-num">05</span><span class="curr-text">Automate Your Life - Workflows That Work for You</span><span class="curr-check">*</span></div>
-              <div class="curr-item"><span class="curr-num">06</span><span class="curr-text">Monetize AI - Turn These Skills Into Real Income</span><span class="curr-check">*</span></div>
+              <div class="curr-item"><span class="curr-num">01</span><span class="curr-text">What Artificial Intelligence (AI) is and how it works</span><span class="curr-check">*</span></div>
+              <div class="curr-item"><span class="curr-num">02</span><span class="curr-text">How to use popular AI tools effectively</span><span class="curr-check">*</span></div>
+              <div class="curr-item"><span class="curr-num">03</span><span class="curr-text">How to write powerful prompts that generate better results</span><span class="curr-check">*</span></div>
+              <div class="curr-item"><span class="curr-num">04</span><span class="curr-text">Create AI-generated images, videos, and content</span><span class="curr-check">*</span></div>
+              <div class="curr-item"><span class="curr-num">05</span><span class="curr-text">Create an AI generated website</span><span class="curr-check">*</span></div>
+              <div class="curr-item"><span class="curr-num">06</span><span class="curr-text">Boost your productivity using AI</span><span class="curr-check">*</span></div>
             </div>
             <button class="btn-primary" onclick="startPayment()">&#128274; Pay &#8377;999 &amp; Unlock Course</button>
           </div>
           <div>
             <div class="pricing-card">
               <div class="price-tag">HOT DEAL</div>
+              <div class="price-badge">LIMITED OFFER</div>
+              <div class="price-orig">Rs.2,449</div>
               <div class="price-val">Rs.999</div>
               <div class="price-period">One-time - Lifetime Access</div>
               <ul class="price-features">
-                <li>6 comprehensive modules</li>
                 <li>HD video lessons</li>
-                <li>Downloadable resources</li>
-                <li>Private community access</li>
-                <li>Direct Q&amp;A with Abhi</li>
-                <li>Certificate of completion</li>
-                <li>Free future updates</li>
+                <li>Beginner-Friendly Lessons</li>
+                <li>Learn on Mobile &amp; Desktop</li>
+                <li>Access from Anywhere</li>
+                <li>Easy-to-Understand</li>
+                <li>Self-Paced Learning</li>
               </ul>
               <button class="btn-enroll" onclick="startPayment()">Enroll Now - Rs.999</button>
               <p class="guarantee">&#128274; 100% Worth It</p>
@@ -532,9 +530,9 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:48px 2
         <div class="gold-line"></div>
         <p class="section-sub">Have a collaboration idea, course query, or just want to say hi? I personally read every message.</p>
         <div class="contact-items">
-          <div class="citem"><div class="citem-icon">&#128231;</div><a href="mailto:abhitalks678999@gmail.com">abhitalks678999@gmail.com</a></div>
-          <div class="citem"><div class="citem-icon">&#128222;</div><a href="tel:70658791">70658791</a></div>
-          <div class="citem"><div class="citem-icon">&#9992;</div><a href="https://t.me/abhitalkshere" target="_blank">Telegram: @abhitalkshere</a></div>
+          <div class="citem"><div class="citem-icon">&#128231;</div><a href="mailto:abhitalkshere@gmail.com">abhitalkshere@gmail.com</a></div>
+          <div class="citem"><div class="citem-icon">&#9992;</div><a href="https://t.me/abhitalks_here" target="_blank">Telegram Chat</a></div>
+          <div class="citem"><div class="citem-icon">&#9992;</div><a href="https://t.me/abhitalkshere" target="_blank">Telegram Channel</a></div>
         </div>
       </div>
       <div class="reveal">
